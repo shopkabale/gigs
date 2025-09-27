@@ -12,11 +12,11 @@
     <header class="sticky-header">
         <div class="header-top-bar">
             <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
-            <a href="https://www.kabaleonline.com/" class="site-title">Kabale <span>Online</span></a>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
             <div class="header-spacer"></div>
             <div class="header-icons">
-                <a href="https://www.kabaleonline.com/inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
-                <a href="https://www.kabaleonline.com/dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
             </div>
         </div>
     </header>
@@ -24,37 +24,26 @@
         <div class="mobile-nav-header">Kabale Online</div>
         <div class="mobile-nav-links">
             <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
-            <a href="https://www.kabaleonline.com/browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
             <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
-            <a href="https://www.kabaleonline.com/stories.html"><i class="fa-solid fa-book-open"></i> Campus Stories</a>
-            <a href="https://www.kabaleonline.com/inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
             <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
         </div>
         <div class="mobile-nav-footer">
-            <a href="https://www.kabaleonline.com/dashboard.html" class="post-button">Post Something Free</a>
-             <p style="text-align: center; margin: 1rem 0 0; font-size: 0.9em;"><a href="login.html">Login</a> or <a href="signup.html">Sign Up</a></p>
+            <a href="dashboard.html" class="post-button">Post Something Free</a>
         </div>
     </nav>
 
     <main class="page-container container">
-        <section style="text-align: center; padding: 4rem 0;">
-            <h1 style="font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 1rem; line-height: 1.1;" class="animate-on-load">
-                Professional Services <br>for a <span style="color: var(--primary-color);">Vibrant Kabale</span>
-            </h1>
-            <p style="font-size: 1.25rem; color: var(--text-light); max-width: 650px; margin: 0 auto 2.5rem; animation-delay: 0.2s;" class="animate-on-load">
-                The most modern platform to connect with skilled service providers in Kigezi.
-            </p>
-            <!-- === ACTION BUTTONS RESTORED HERE === -->
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; animation-delay: 0.4s;" class="animate-on-load">
-                <a href="browse.html" class="cta-button message-btn" style="padding: 14px 28px; font-size: 1.1rem;">Browse Services</a>
-                <a href="dashboard.html" class="cta-button profile-btn" style="padding: 14px 28px; font-size: 1.1rem;">Offer a Service</a>
-            </div>
+        <section style="text-align: center; padding: 3rem 0;">
+             <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.5rem;">Professional Services <br>for a <span style="color: var(--primary-color);">Vibrant Kabale</span></h1>
+             <a href="browse.html" class="cta-button message-btn" style="padding: 14px 28px; font-size: 1.1rem; display: inline-block; width: auto;">Browse All Services</a>
         </section>
 
-        <section style="padding: 3rem 0;">
-            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.6s;">Featured Services</h2>
-            <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
-                <!-- Services will be loaded by js/home.js -->
+        <section>
+            <h2 style="font-size: 2rem; text-align: center; margin-bottom: 2.5rem;">Featured Services</h2>
+            <div id="featured-services">
+                <div class="loading-spinner"><div class="spinner"></div></div>
             </div>
         </section>
     </main>
@@ -72,7 +61,6 @@
                 <a href="https://www.kabaleonline.com/about.html">About</a>
                 <a href="https://www.kabaleonline.com/blog/">Blog</a>
                 <a href="https://www.kabaleonline.com/terms.html">Terms</a>
-                <a href="https://www.kabaleonline.com/contact.html">Contact</a>
             </div>
             <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
         </div>
