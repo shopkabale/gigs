@@ -11,7 +11,9 @@ onAuthStateChanged(auth, async (user) => {
         try {
             const userRef = doc(db, "users", currentUser.uid);
             const userSnap = await getDoc(userRef);
-            if (userSnap.exists() && userSnap.data().isAdmin === true) {
+            // --- THIS IS THE UPDATED LINE ---
+            // It now checks for role === 'admin' instead of isAdmin === true
+            if (userSnap.exists() && userSnap.data().role === 'admin') {
                 loadAdminDashboard();
             } else {
                 renderAccessDenied();
