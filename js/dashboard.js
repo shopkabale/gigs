@@ -87,7 +87,20 @@ async function loadDashboard() {
         if (!userSnap.exists()) {
             throw new Error("User data not found!");
         }
-        const userData = userSnap.data();
+        let userData = userSnap.data();
+
+        // --- NEW LOGIC ADDED HERE ---
+        // This is the "Lazy Update". It checks if the 'plan' field is missing.
+        if (!userData.plan) {
+            console.log(`User ${currentUser.uid} is missing the 'plan' field. Upgrading now.`);
+            // If it's missing, we add it with a default value of 'spark'.
+            await updateDoc(userRef, {
+                plan: 'spark'
+            });
+            // We update our local copy of the data immediately.
+            userData.plan = 'spark'; 
+        }
+        // --- END OF NEW LOGIC ---
 
         const servicesQuery = query(collection(db, "services"), where("providerId", "==", currentUser.uid), orderBy("createdAt", "desc"));
         const servicesSnapshot = await getDocs(servicesQuery);
