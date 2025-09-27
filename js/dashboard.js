@@ -19,7 +19,10 @@ function renderDashboard(userData, userServices) {
     userPlan = userData.plan || 'spark';
     let servicesHtml = '<p class="text-muted">You have not listed any services yet.</p>';
     if (userServices.length > 0) {
-        servicesHtml = userServices.map(service => `
+        // We will sort the services here in the browser instead of in the database query
+        const sortedServices = userServices.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+        
+        servicesHtml = sortedServices.map(service => `
             <div class="bg-gray p-4 rounded-lg flex justify-between items-center">
                 <span>${service.title}</span>
                 <div>
@@ -36,7 +39,6 @@ function renderDashboard(userData, userServices) {
 
         <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem;" class="md:grid-cols-3">
             <div class="md:col-span-2 space-y-8">
-                <!-- Add Service Form -->
                 <div class="bg-white p-6 rounded-lg shadow-md slide-up">
                     <h2 class="font-bold text-xl mb-4">Add a New Service</h2>
                     <form id="add-service-form">
@@ -46,14 +48,12 @@ function renderDashboard(userData, userServices) {
                         <button type="submit" class="btn btn-primary w-full">Add Service</button>
                     </form>
                 </div>
-                <!-- My Services -->
                 <div class="bg-white p-6 rounded-lg shadow-md slide-up" style="animation-delay: 0.1s;">
                     <h2 class="font-bold text-xl mb-4">My Services</h2>
                     <div id="user-services-list" class="space-y-4">${servicesHtml}</div>
                 </div>
             </div>
 
-            <!-- Profile & Actions -->
             <div class="md:col-span-1 space-y-8">
                 <div class="bg-white p-6 rounded-lg shadow-md slide-up" style="animation-delay: 0.2s;">
                     <h2 class="font-bold text-xl mb-4">My Profile</h2>
@@ -89,20 +89,17 @@ async function loadDashboard() {
         }
         let userData = userSnap.data();
 
-        // --- NEW LOGIC ADDED HERE ---
-        // This is the "Lazy Update". It checks if the 'plan' field is missing.
         if (!userData.plan) {
-            console.log(`User ${currentUser.uid} is missing the 'plan' field. Upgrading now.`);
-            // If it's missing, we add it with a default value of 'spark'.
-            await updateDoc(userRef, {
-                plan: 'spark'
-            });
-            // We update our local copy of the data immediately.
+            await updateDoc(userRef, { plan: 'spark' });
             userData.plan = 'spark'; 
         }
-        // --- END OF NEW LOGIC ---
 
-        const servicesQuery = query(collection(db, "services"), where("providerId", "==", currentUser.uid), orderBy("createdAt", "desc"));
+        // --- THIS IS THE IMPORTANT CHANGE ---
+        // I have REMOVED the `orderBy("createdAt", "desc")` from this query.
+        // This new, simpler query does NOT require a special index.
+        const servicesQuery = query(collection(db, "services"), where("providerId", "==", currentUser.uid));
+        // --- END OF CHANGE ---
+
         const servicesSnapshot = await getDocs(servicesQuery);
         const userServices = servicesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
