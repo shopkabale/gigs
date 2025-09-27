@@ -41,7 +41,7 @@
 
         <section style="padding: 3rem 0;">
             <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="slide-up">Featured Services</h2>
-            <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+            <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
                 <!-- Skeleton loaders -->
                 <div class="service-card skeleton"></div>
                 <div class="service-card skeleton"></div>
@@ -62,7 +62,7 @@
         const hamburger = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');
         const overlay = document.querySelector('.mobile-nav-overlay');
-
+        
         function closeNav() {
             mobileNav.classList.remove('active');
             overlay.classList.remove('active');
