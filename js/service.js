@@ -8,45 +8,38 @@ let currentUser = null;
 const urlParams = new URLSearchParams(window.location.search);
 const serviceId = urlParams.get('id');
 
-if (!serviceId) {
-    serviceDetailContent.innerHTML = '<h1>Service Not Found</h1>';
-} else {
-    onAuthStateChanged(auth, user => {
-        currentUser = user;
-        loadServiceAndProvider();
-    });
-}
+onAuthStateChanged(auth, user => {
+    currentUser = user;
+    loadServiceAndProvider();
+});
 
 async function loadServiceAndProvider() {
     try {
         const serviceRef = doc(db, 'services', serviceId);
         const serviceSnap = await getDoc(serviceRef);
-        if (!serviceSnap.exists()) {
-            serviceDetailContent.innerHTML = '<h1>Service Not Found</h1>';
-            return;
-        }
+        if (!serviceSnap.exists()) { throw new Error("Service not found"); }
         const serviceData = serviceSnap.data();
         const sellerRef = doc(db, 'users', serviceData.providerId);
         const sellerSnap = await getDoc(sellerRef);
         const sellerData = sellerSnap.exists() ? sellerSnap.data() : {};
         renderServiceDetails(serviceData, sellerData);
     } catch (error) {
-        console.error("Error loading service:", error);
+        serviceDetailContent.innerHTML = `<h1>${error.message}</h1>`;
     }
 }
 
 function renderServiceDetails(service, seller) {
     const whatsappLink = `https://wa.me/${seller.whatsapp}?text=Hello, I'm interested in your service for '${service.title}' on Kabale Online.`;
-    const optimizedImage = getCloudinaryTransformedUrl(service.imageUrl, 'full');
     
     serviceDetailContent.innerHTML = `
         <div class="service-detail-container">
             <div class="service-images">
-                <img src="${optimizedImage}" alt="${service.title}">
+                <img src="${getCloudinaryTransformedUrl(service.imageUrl, 'full')}" alt="${service.title}">
             </div>
             <div class="service-info">
                 <h1>${service.title}</h1>
-                <p style="white-space: pre-wrap;">${service.description}</p>
+                <h2 style="font-size: 1.8rem; color: var(--primary-color);">UGX ${service.price.toLocaleString()}</h2>
+                <p style="white-space: pre-wrap; margin-top: 1.5rem;">${service.description}</p>
                 <div class="seller-card">
                     <h4>About the Provider</h4>
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
