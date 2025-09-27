@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kabale Online - Services, Skills & Community</title>
-    <meta name="description" content="Connect with skilled service providers in Kabale. Find tutors, designers, technicians, and more. The #1 platform for services in Kigezi.">
+    <title>Kabale Online - Dynamic Services & Skills</title>
+    <meta name="description" content="The most modern platform to connect with skilled service providers in Kabale. Featuring dynamic animations and a professional interface.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -30,29 +30,30 @@
     </nav>
 
     <main class="page-container container">
-        <section style="text-align: center; padding: 3rem 0;">
-            <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; margin-bottom: 1rem;" class="fade-in">Find Local Services in <span style="color: var(--primary-color);">Kabale</span></h1>
-            <p style="font-size: 1.125rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2rem; animation-delay: 0.1s;" class="fade-in">The heart of Kigezi's skilled community. Connect with trusted professionals for any task.</p>
-            <div style="display: flex; justify-content: center; gap: 1rem; animation-delay: 0.2s;" class="fade-in">
+        <section style="text-align: center; padding: 4rem 0;">
+            <h1 style="font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1;" class="animate-on-load">
+                Modern Services <br>for a <span style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Vibrant Kabale</span>
+            </h1>
+            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; animation-delay: 0.2s;" class="animate-on-load">
+                Experience the next level of local commerce. A seamless, animated, and professional platform built for you.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; animation-delay: 0.4s;" class="animate-on-load">
                 <a href="browse.html" class="btn btn-primary">Browse Services</a>
                 <a href="dashboard.html" class="btn btn-secondary">Offer a Service</a>
             </div>
         </section>
 
         <section style="padding: 3rem 0;">
-            <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="slide-up">Featured Services</h2>
-            <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-                <!-- Skeleton loaders -->
-                <div class="service-card skeleton"></div>
-                <div class="service-card skeleton"></div>
-                <div class="service-card skeleton"></div>
+            <h2 style="font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.6s;">Featured Services</h2>
+            <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+                <!-- Skeleton cards will be replaced by animated cards -->
             </div>
         </section>
     </main>
 
-    <footer style="background-color: var(--text-dark); color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
+    <footer style="background-color: var(--text-dark); color: white; padding: 3rem 0; text-align: center; margin-top: 3rem;">
         <div class="container" style="color: var(--text-muted);">
-            <p>&copy; 2025 Kabale Online. Connecting Kigezi.</p>
+            <p>&copy; 2025 Kabale Online. Connecting Kigezi with Style.</p>
         </div>
     </footer>
 
@@ -62,17 +63,8 @@
         const hamburger = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');
         const overlay = document.querySelector('.mobile-nav-overlay');
-        
-        function closeNav() {
-            mobileNav.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
-        hamburger.addEventListener('click', () => {
-            mobileNav.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
-
+        function closeNav() { mobileNav.classList.remove('active'); overlay.classList.remove('active'); }
+        hamburger.addEventListener('click', () => { mobileNav.classList.toggle('active'); overlay.classList.toggle('active'); });
         overlay.addEventListener('click', closeNav);
     </script>
 </body>
