@@ -23,12 +23,13 @@
                 <div class="form-group">
                     <input type="password" id="signup-password" placeholder="Password (min. 6 characters)" required>
                 </div>
-                <p id="error-message" style="color: var(--error-color); text-align: center; margin-bottom: 1rem; display: none;"></p>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                <p id="error-message" style="color: red; text-align: center; margin-bottom: 1rem; display: none;"></p>
+                <button type="submit" id="signup-btn" class="btn btn-primary">Create Account</button>
             </form>
             <p style="text-align: center; color: var(--text-light); margin-top: 1.5rem;">Already have an account? <a href="login.html" style="font-weight: bold;">Login</a></p>
         </div>
     </main>
+    <!-- === THIS IS THE FIX (Removed the extra dot) === -->
     <script type="module" src="js/auth.js"></script>
 </body>
 </html>
