@@ -51,11 +51,9 @@ function renderServiceDetails(service, seller) {
                     <h4>About the Provider</h4>
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                         <img src="${getCloudinaryTransformedUrl(seller.profilePhotoUrl, 'profile')}" alt="${seller.name}" class="profile-photo">
-                        <div>
-                            <strong>${seller.name || 'Provider'}</strong>
-                        </div>
+                        <div><strong>${seller.name || 'Provider'}</strong></div>
                     </div>
-                    <div class="contact-buttons">
+                    <div class="contact-buttons" style="display: flex; flex-direction: column; gap: 10px;">
                         ${currentUser && currentUser.uid !== service.providerId ? `<a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn">Message Provider</a>` : ''}
                         ${!currentUser ? `<a href="login.html" class="cta-button message-btn">Login to Message</a>` : ''}
                         ${seller.whatsapp ? `<a href="${whatsappLink}" target="_blank" class="cta-button whatsapp-btn">Contact via WhatsApp</a>` : ''}
