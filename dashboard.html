@@ -5,108 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Kabale Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Link to the main stylesheet for header, footer, etc. -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- === EMBEDDED CSS FOR DASHBOARD - AS REQUESTED === -->
-    <style>
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Mobile: single column */
-            gap: 2rem;
-        }
-        @media (min-width: 992px) {
-            .dashboard-grid {
-                grid-template-columns: 2fr 1fr; /* Desktop: two columns */
-            }
-        }
-        .dashboard-card {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-        .dashboard-card h2 {
-            font-size: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-        .service-list-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background-color: var(--bg-color);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-        .service-list-item img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-        .service-list-item-info {
-            flex-grow: 1;
-            overflow: hidden;
-        }
-        .service-list-item-info p {
-            margin: 0;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .service-list-item-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-shrink: 0;
-        }
-        .action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 0.5rem;
-            color: var(--text-light);
-            transition: all 0.2s ease;
-        }
-        .action-btn.edit:hover { color: var(--primary-color); transform: scale(1.2); }
-        .action-btn.delete:hover { color: var(--error-color); transform: scale(1.2); }
-        .profile-photo-square {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-            border: 4px solid white;
-            box-shadow: var(--shadow-lg);
-        }
-        .account-card-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-        }
-        .account-card-item span:first-child { font-weight: 600; color: var(--text-light); }
-        .account-card-item span.plan { font-weight: bold; text-transform: capitalize; color: var(--primary-color); }
-        #logout-btn {
-            margin-top: 1rem;
-            border: 2px solid var(--error-color);
-            color: var(--error-color);
-            background-color: transparent;
-        }
-        #logout-btn:hover {
-             background-color: var(--error-color);
-             color: white;
-        }
-    </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header"><!-- Your Unified Header --></header>
-    <nav class="mobile-nav"><!-- Your Unified Mobile Nav --></nav>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-links">
+            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
+            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
+        </div>
+        <div class="mobile-nav-footer">
+            <a href="dashboard.html" class="post-button">Post Something Free</a>
+        </div>
+    </nav>
 
     <main class="page-container container" id="dashboard-container">
         <div class="loading-spinner"><div class="spinner"></div></div>
@@ -114,14 +40,14 @@
 
     <div id="edit-service-modal" class="modal">
         <div class="modal-content">
-            <h2 style="font-size: 1.5rem;">Edit Service</h2>
+            <h2 style="font-size:1.5rem">Edit Service</h2>
             <form id="edit-service-form">
                 <input type="hidden" id="edit-service-id">
                 <div class="form-group"><label for="edit-service-title">Title</label><input type="text" id="edit-service-title" required></div>
                 <div class="form-group"><label for="edit-service-price">Price (UGX)</label><input type="number" id="edit-service-price" placeholder="e.g., 50000" required></div>
                 <div class="form-group"><label for="edit-service-desc">Description</label><textarea id="edit-service-desc" required></textarea></div>
                 <div class="form-group"><label for="edit-service-image">Update Image (optional)</label><input type="file" id="edit-service-image" accept="image/*"></div>
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <div style="display:flex;gap:1rem;margin-top:1.5rem">
                     <button type="submit" id="update-service-btn" class="btn btn-primary">Save Changes</button>
                     <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
                 </div>
@@ -129,7 +55,7 @@
         </div>
     </div>
 
-        <footer>
+    <footer>
         <div class="container">
             <div class="footer-logo">Kabale <span>Online</span></div>
             <p class="footer-tagline">Your Community Marketplace</p>
@@ -146,8 +72,7 @@
             <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
         </div>
     </footer>
-
-    <script type="module" src="js/home.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
     <script>
         document.querySelector('.hamburger-menu').addEventListener('click', () => {
             document.querySelector('.mobile-nav').classList.toggle('active');
