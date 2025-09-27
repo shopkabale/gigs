@@ -54,7 +54,7 @@ function renderPlans() {
 
 // In a real app, this would trigger a payment flow. For now, it shows an alert.
 window.handleUpgradeClick = function(planName) {
-    alert(`To upgrade to the ${planName} plan, please contact us on WhatsApp for manual activation. (This is a demo feature).`);
+    alert(`To upgrade to the ${planName} plan, please contact us on WhatsApp for manual activation. (This is will take a few minutes ).`);
 }
 
 document.addEventListener('DOMContentLoaded', renderPlans);
