@@ -9,8 +9,31 @@
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header"><!-- Header from index.html --></header>
-    <nav class="mobile-nav"><!-- Mobile Nav from index.html --></nav>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="https://www.kabaleonline.com/" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="https://www.kabaleonline.com/inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="https://www.kabaleonline.com/dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-links">
+            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
+            <a href="https://www.kabaleonline.com/browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="https://www.kabaleonline.com/stories.html"><i class="fa-solid fa-book-open"></i> Campus Stories</a>
+            <a href="https://www.kabaleonline.com/inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
+        </div>
+        <div class="mobile-nav-footer">
+            <a href="https://www.kabaleonline.com/dashboard.html" class="post-button">Post Something Free</a>
+        </div>
+    </nav>
 
     <main class="container page-container">
         <div id="service-detail-content"><div class="loading-spinner"><div class="spinner"></div></div></div>
@@ -21,9 +44,35 @@
         </div>
     </main>
 
-    <footer><!-- Footer from index.html --></footer>
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Kabale <span>Online</span></div>
+            <p class="footer-tagline">Your Community Marketplace</p>
+            <div class="footer-socials">
+                <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://twitter.com/kabaleonline" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kabaleonline" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.kabaleonline.com/about.html">About</a>
+                <a href="https://www.kabaleonline.com/blog/">Blog</a>
+                <a href="https://www.kabaleonline.com/terms.html">Terms</a>
+                <a href="https://www.kabaleonline.com/contact.html">Contact</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script type="module" src="js/service.js"></script>
-    <script>/* Hamburger Toggle Script from index.html */</script>
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
+    </script>
 </body>
 </html>
