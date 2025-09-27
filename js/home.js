@@ -35,6 +35,7 @@ async function loadFeaturedServices() {
 
     } catch (error) {
         console.error("Error loading services:", error);
+        featuredServicesContainer.innerHTML = '<p class="text-center text-light">Could not load services.</p>';
     }
 }
 
