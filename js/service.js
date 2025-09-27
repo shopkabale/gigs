@@ -57,7 +57,7 @@ function renderServiceDetails(service, seller) {
                     <button id="share-btn" title="Share"><i class="fa-solid fa-share-alt"></i></button>
                 </div>
                 <h2 id="service-price" class="animate-on-load" style="animation-delay: 0.3s;">Contact for Quote</h2>
-                <p id="service-description" class="animate-on-load" style="animation-delay: 0.4s;">${service.description}</p>
+                <p id="service-description" class="animate-on-load" style="animation-delay: 0.4s;">${service.description.replace(/\n/g, '<br>')}</p>
                 <div class="seller-card animate-on-load" style="animation-delay: 0.5s;">
                     <h4>About the Provider</h4>
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
@@ -68,7 +68,8 @@ function renderServiceDetails(service, seller) {
                         </div>
                     </div>
                     <div class="contact-buttons">
-                        <a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn"><i class="fa-solid fa-comment-dots"></i> Message Provider</a>
+                        ${currentUser && currentUser.uid !== service.providerId ? `<a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn"><i class="fa-solid fa-comment-dots"></i> Message Provider</a>` : ''}
+                        ${!currentUser ? `<a href="login.html" class="cta-button message-btn"><i class="fa-solid fa-comment-dots"></i> Login to Message</a>` : ''}
                         ${seller.whatsapp ? `<a href="${whatsappLink}" target="_blank" class="cta-button whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Contact via WhatsApp</a>` : ''}
                         <a href="profile.html?id=${service.providerId}" class="cta-button profile-btn">View Public Profile</a>
                     </div>
@@ -92,4 +93,55 @@ function setupShareButton(service, seller) {
     });
 }
 
-// ... Q&A functions from your reference JS would go here ...
+function loadQandA(providerId) {
+    const qandaRef = collection(db, 'services', serviceId, 'qanda');
+    const q = query(qandaRef, orderBy('timestamp', 'desc'));
+    onSnapshot(q, (snapshot) => {
+        qaList.innerHTML = snapshot.empty ? '<p>No questions have been asked yet.</p>' : '';
+        snapshot.forEach(docSnap => {
+            const qa = docSnap.data();
+            const div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<p><strong>Q: ${qa.question}</strong></p>${qa.answer ? `<div class="answer-item"><p><strong>A:</strong> ${qa.answer}</p></div>` : ''}`;
+            qaList.appendChild(div);
+        });
+    });
+
+    if (currentUser) {
+        qaFormContainer.innerHTML = `
+            <h4>Ask a Question</h4>
+            <form id="qa-form" class="qa-form">
+                <textarea id="question-input" placeholder="Type your question here..." required></textarea>
+                <button type="submit" class="cta-button message-btn">Submit Question</button>
+                <p id="qa-form-message" style="margin-top: 10px; color: green;"></p>
+            </form>`;
+        document.getElementById('qa-form').addEventListener('submit', (e) => submitQuestion(e, providerId));
+    } else {
+        qaFormContainer.innerHTML = `<p style="text-align: center;">Please <a href="login.html" style="font-weight: bold;">login</a> to ask a question.</p>`;
+    }
+}
+
+async function submitQuestion(e, providerId) {
+    e.preventDefault();
+    const form = e.target;
+    const questionInput = form.querySelector('#question-input');
+    const messageEl = form.querySelector('#qa-form-message');
+    const questionText = questionInput.value.trim();
+    if (!questionText) return;
+
+    try {
+        await addDoc(collection(db, 'services', serviceId, 'qanda'), {
+            question: questionText,
+            answer: null,
+            askerId: currentUser.uid,
+            providerId: providerId,
+            timestamp: serverTimestamp()
+        });
+        questionInput.value = '';
+        messageEl.textContent = 'Your question has been submitted!';
+        setTimeout(() => messageEl.textContent = '', 3000);
+    } catch (err) {
+        messageEl.textContent = 'Failed to submit question.';
+        messageEl.style.color = 'red';
+    }
+}
