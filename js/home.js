@@ -1,5 +1,6 @@
 import { db } from './firebase-config.js';
 import { collection, query, getDocs, limit, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getCloudinaryTransformedUrl } from './utils.js';
 
 const featuredServicesContainer = document.getElementById('featured-services');
 
@@ -10,34 +11,30 @@ async function loadFeaturedServices() {
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-            featuredServicesContainer.innerHTML = '<p class="text-center text-muted" style="grid-column: 1 / -1;">No services available right now. Be the first to offer one!</p>';
+            featuredServicesContainer.innerHTML = '<p class="text-center text-light">No services available yet.</p>';
             return;
         }
 
         let servicesHtml = '';
-        let delay = 0.8; // Start animation after the hero section
+        let delay = 0.6;
         querySnapshot.forEach(doc => {
             const service = doc.data();
             const serviceId = doc.id;
             servicesHtml += `
                 <a href="service.html?id=${serviceId}" class="service-card animate-on-load" style="animation-delay: ${delay}s">
-                    <img src="${service.imageUrl || 'https://placehold.co/400x300/e0e0e0/777?text=Service'}" alt="${service.title}" class="card-image">
+                    <img src="${getCloudinaryTransformedUrl(service.imageUrl, 'thumbnail')}" alt="${service.title}" class="card-image">
                     <div class="card-content">
                         <h3 class="card-title">${service.title}</h3>
-                        <p class="card-provider">By ${service.providerName}</p>
-                        <div class="card-footer">
-                           <span>View Details <i class="fas fa-arrow-right"></i></span>
-                        </div>
+                        <p class="card-provider text-light">By ${service.providerName}</p>
                     </div>
                 </a>
             `;
-            delay += 0.2; // Stagger the next card's animation
+            delay += 0.2;
         });
         featuredServicesContainer.innerHTML = servicesHtml;
 
     } catch (error) {
-        console.error("Error loading featured services:", error);
-        featuredServicesContainer.innerHTML = '<p class="text-center text-error-color" style="grid-column: 1 / -1;">Could not load services at this time.</p>';
+        console.error("Error loading services:", error);
     }
 }
 
