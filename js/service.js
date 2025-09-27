@@ -8,10 +8,14 @@ let currentUser = null;
 const urlParams = new URLSearchParams(window.location.search);
 const serviceId = urlParams.get('id');
 
-onAuthStateChanged(auth, user => {
-    currentUser = user;
-    loadServiceAndProvider();
-});
+if (!serviceId) {
+    serviceDetailContent.innerHTML = '<h1>Service Not Found</h1>';
+} else {
+    onAuthStateChanged(auth, user => {
+        currentUser = user;
+        loadServiceAndProvider();
+    });
+}
 
 async function loadServiceAndProvider() {
     try {
