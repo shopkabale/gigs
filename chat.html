@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Kabale Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="sticky-header">
+        <div class="header-top-bar container">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay"></div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="site-title" style="padding: 1.25rem; border-bottom: 1px solid var(--border-color);">Kabale <span>Online</span></a>
+        <a href="browse.html" style="padding: 1rem; border-bottom: 1px solid #eee;">Browse Services</a>
+        <a href="dashboard.html" style="padding: 1rem;">Dashboard</a>
+        <a href="login.html" style="padding: 1rem; border-top: 1px solid #eee; margin-top: auto;">Login / Sign Up</a>
+    </nav>
+
+    <div class="page-container container">
+        <main class="bg-white rounded-lg shadow-lg fade-in" style="display: flex; flex-direction: column; height: 80vh;">
+            <div id="chat-header" style="padding: 1rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 1rem;">
+                <a href="inbox.html" style="color: var(--text-dark);"><i class="fas fa-arrow-left"></i></a>
+                <h1 id="chat-recipient-name" style="font-size: 1.25rem; font-weight: 600; margin: 0;">Loading...</h1>
+            </div>
+            <div id="chat-messages" class="chat-messages" style="flex-grow: 1;">
+                 <div class="loading-spinner"><div class="spinner"></div></div>
+            </div>
+            <form id="chat-form" class="chat-form">
+                <textarea id="message-input" placeholder="Type a message..." required rows="1"></textarea>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </main>
+        <button id="review-modal-btn" class="btn btn-accent w-full mt-6 slide-up">Leave a Review</button>
+    </div>
+
+    <div id="review-modal" class="modal">
+      <div class="modal-content">
+        <h2>Leave a Review for <span id="review-recipient-name"></span></h2>
+        <div id="star-rating" style="display:flex; margin-bottom:1rem; justify-content: center;">
+          <span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span>
+        </div>
+        <form id="review-form">
+          <textarea id="review-text" class="form-group" style="width: 100%;" placeholder="Write a review..."></textarea>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <button id="submit-review-btn" type="submit" class="btn btn-primary" style="flex-grow: 1;">Submit</button>
+            <button type="button" id="cancel-review-btn" class="btn btn-secondary" style="flex-grow: 1;">Cancel</button>
+          </div>
+          <p id="review-form-message" style="text-align: center; margin-top: 1rem;"></p>
+        </form>
+      </div>
+    </div>
+    
+    <footer style="background-color: var(--text-dark); color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
+        <div class="container" style="color: var(--text-muted);">
+            <p>&copy; 2025 Kabale Online. Connecting Kigezi.</p>
+        </div>
+    </footer>
+    <script type="module" src="js/chat.js"></script>
+    <script>
+        // --- Mobile Navigation Toggle ---
+        const hamburger = document.querySelector('.hamburger-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const overlay = document.querySelector('.mobile-nav-overlay');
+        
+        function closeNav() {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', closeNav);
+    </script>
+</body>
+</html>
