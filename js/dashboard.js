@@ -8,7 +8,6 @@ const editModal = document.getElementById('edit-service-modal');
 const editForm = document.getElementById('edit-service-form');
 let currentUser = null;
 
-// --- Cloudinary Upload Function (for GitHub Pages) ---
 async function uploadImageToCloudinary(file) {
     const CLOUD_NAME = "YOUR_NEW_CLOUD_NAME";
     const UPLOAD_PRESET = "YOUR_NEW_UNSIGNED_PRESET_NAME";
@@ -59,11 +58,17 @@ function renderDashboard(userData, userServices) {
                 </div>
             </div>
             <div class="space-y-8">
-                <div class="dashboard-card" style="text-align: center;">
+                <div class="dashboard-card">
                     <h2>My Profile</h2>
-                    <img src="${getCloudinaryTransformedUrl(userData.profilePhotoUrl, 'profile')}" alt="Your profile" class="profile-photo-square" style="margin: 0 auto 1.5rem;">
-                    <h3 style="margin: 0;">${userData.name}</h3>
-                    <p class="text-light">${userData.email}</p>
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <img src="${getCloudinaryTransformedUrl(userData.profilePhotoUrl, 'profile')}" alt="Your profile" class="profile-photo-square">
+                    </div>
+                    <form id="update-profile-form">
+                        <div class="form-group"><label for="profile-name">Full Name</label><input type="text" id="profile-name" value="${userData.name}" required></div>
+                        <div class="form-group"><label for="profile-bio">Your Bio</label><textarea id="profile-bio" placeholder="A short bio...">${userData.bio || ''}</textarea></div>
+                        <div class="form-group"><label for="profile-photo-file">Update Profile Photo</label><input type="file" id="profile-photo-file" accept="image/*"></div>
+                        <button type="submit" class="btn btn-secondary w-full">Update Profile</button>
+                    </form>
                 </div>
                 <div class="dashboard-card">
                     <h2>Account</h2>
@@ -105,17 +110,44 @@ function attachEventListeners(currentUserName) {
                 title: document.getElementById('service-title').value,
                 price: Number(document.getElementById('service-price').value),
                 description: document.getElementById('service-desc').value,
-                imageUrl,
-                providerId: currentUser.uid,
-                providerName: currentUserName,
-                createdAt: serverTimestamp(),
-                isFeatured: false
+                imageUrl, providerId: currentUser.uid, providerName: currentUserName,
+                createdAt: serverTimestamp(), isFeatured: false
             });
-            e.target.reset();
-            loadDashboard();
+            e.target.reset(); loadDashboard();
         } catch(error) { alert(error.message); } 
         finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
     });
+
+    // --- NEW "UPDATE PROFILE" EVENT LISTENER ---
+    document.getElementById('update-profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitButton = e.target.querySelector('button');
+        submitButton.disabled = true; submitButton.classList.add('loading');
+        
+        try {
+            const name = document.getElementById('profile-name').value;
+            const bio = document.getElementById('profile-bio').value;
+            const profilePhotoFile = document.getElementById('profile-photo-file').files[0];
+            
+            const dataToUpdate = { name, bio };
+
+            if (profilePhotoFile) {
+                const photoURL = await uploadImageToCloudinary(profilePhotoFile);
+                dataToUpdate.profilePhotoUrl = photoURL;
+            }
+            
+            await updateDoc(doc(db, "users", currentUser.uid), dataToUpdate);
+            alert("Profile updated successfully!");
+            loadDashboard(); // Refresh to show changes
+        } catch (error) {
+            console.error("Profile update error:", error);
+            alert("Could not update profile.");
+        } finally {
+            submitButton.disabled = false;
+            submitButton.classList.remove('loading');
+        }
+    });
+    
     const serviceList = document.getElementById('user-services-list');
     if (serviceList) {
         serviceList.addEventListener('click', async (e) => {
