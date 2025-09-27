@@ -3,14 +3,17 @@ import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/fir
 import { getCloudinaryTransformedUrl } from './utils.js';
 
 const servicesGrid = document.getElementById('services-grid');
+
 async function loadAllServices() {
     try {
         const servicesQuery = query(collection(db, "services"), orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(servicesQuery);
+        
         if (querySnapshot.empty) {
-            servicesGrid.innerHTML = '<p style="text-align: center;">No services posted yet.</p>';
+            servicesGrid.innerHTML = '<p style="text-align: center;">No services have been posted yet.</p>';
             return;
         }
+
         const servicesHtml = querySnapshot.docs.map(doc => {
             const service = { id: doc.id, ...doc.data() };
             return `
@@ -25,6 +28,9 @@ async function loadAllServices() {
             `;
         }).join('');
         servicesGrid.innerHTML = servicesHtml;
-    } catch (error) { console.error(error); }
+    } catch (error) {
+        console.error("Error loading services:", error);
+        servicesGrid.innerHTML = '<p style="text-align: center; color: var(--error-color);">Could not load services.</p>';
+    }
 }
 document.addEventListener('DOMContentLoaded', loadAllServices);
