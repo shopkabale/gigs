@@ -6,7 +6,6 @@ const featuredServicesContainer = document.getElementById('featured-services');
 async function loadFeaturedServices() {
     try {
         const servicesRef = collection(db, 'services');
-        // Fetch the 3 most recently created services
         const q = query(servicesRef, orderBy('createdAt', 'desc'), limit(3));
         const querySnapshot = await getDocs(q);
 
@@ -16,23 +15,23 @@ async function loadFeaturedServices() {
         }
 
         let servicesHtml = '';
-        let delay = 0;
+        let delay = 0.8; // Start animation after the hero section
         querySnapshot.forEach(doc => {
             const service = doc.data();
             const serviceId = doc.id;
             servicesHtml += `
-                <a href="service.html?id=${serviceId}" class="service-card slide-up" style="animation-delay: ${delay}s">
+                <a href="service.html?id=${serviceId}" class="service-card animate-on-load" style="animation-delay: ${delay}s">
                     <img src="${service.imageUrl || 'https://placehold.co/400x300/e0e0e0/777?text=Service'}" alt="${service.title}" class="card-image">
                     <div class="card-content">
                         <h3 class="card-title">${service.title}</h3>
                         <p class="card-provider">By ${service.providerName}</p>
                         <div class="card-footer">
-                            <span class="font-bold text-primary-color">View Details</span>
+                           <span>View Details <i class="fas fa-arrow-right"></i></span>
                         </div>
                     </div>
                 </a>
             `;
-            delay += 0.1;
+            delay += 0.2; // Stagger the next card's animation
         });
         featuredServicesContainer.innerHTML = servicesHtml;
 
