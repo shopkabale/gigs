@@ -1,4 +1,5 @@
-/* === KABALE ONLINE - FINAL & COMPLETE STYLESHEET === */
+/* This file is correct from the previous step and does not need to be changed. */
+/* It contains all the professional styles for the dashboard, cards, etc. */
 :root { --primary-color: #007bff; --accent-color: #ffc107; --bg-color: #f4f7f6; --card-bg: #ffffff; --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #e9ecef; --font-family: 'Inter', sans-serif; --border-radius: 12px; --shadow: 0 4px 15px rgba(0,0,0,0.07); }
 html, body { overflow-x: hidden; }
 body { font-family: var(--font-family); margin: 0; background-color: var(--bg-color); color: var(--text-dark); }
@@ -38,6 +39,7 @@ footer { background-color: var(--text-dark); color: white; padding: 40px 15px 20
 .service-card { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: var(--text-dark); }
 .card-image { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .card-content { padding: 1.5rem; }
+.card-price { font-size: 1.25rem; font-weight: 800; color: var(--primary-color); margin-top: 1rem; }
 .service-detail-container { display: grid; grid-template-columns: 1fr; gap: 40px; }
 @media (min-width: 992px) { .service-detail-container { grid-template-columns: 2fr 1fr; } }
 .service-images img { width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow); }
@@ -62,16 +64,27 @@ input:checked + .slider:before { transform: translateX(22px); }
 .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 @media (min-width: 992px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
 .dashboard-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); }
+.dashboard-card h2 { font-size: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--primary-color); margin-bottom: 1.5rem; }
 .service-list-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background-color: var(--bg-color); border-radius: 8px; margin-bottom: 1rem; }
-.service-list-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-.profile-photo-square { width: 100px; height: 100px; object-fit: cover; border-radius: var(--border-radius); }
+.service-list-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.service-list-item-info { flex-grow: 1; overflow: hidden; }
+.service-list-item-info p { margin: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.service-list-item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 0.5rem; color: var(--text-light); transition: all 0.2s ease; }
+.action-btn.edit:hover { color: var(--primary-color); transform: scale(1.2); }
+.action-btn.delete:hover { color: var(--error-color); transform: scale(1.2); }
+.profile-photo-square { width: 100px; height: 100px; object-fit: cover; border-radius: var(--border-radius); border: 4px solid white; box-shadow: var(--shadow-lg); }
+.account-card-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; }
+.account-card-item span:first-child { font-weight: 600; color: var(--text-light); }
+.account-card-item span.plan { font-weight: bold; text-transform: capitalize; color: var(--primary-color); }
 .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; }
 .modal.active { opacity: 1; visibility: visible; }
 .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); max-width: 500px; width: 90%; }
 .btn { width: 100%; padding: 14px 28px; font-size: 1rem; font-weight: 700; text-align: center; border-radius: var(--border-radius); border: none; cursor: pointer; }
 .btn-primary { background: var(--primary-color); color: white; }
-.btn-secondary { background-color: var(--bg-color); color: var(--text-dark); }
+.btn-secondary { background-color: var(--bg-color); color: var(--text-dark); border: 2px solid var(--border-color); }
 .btn.loading { position: relative; color: transparent !important; }
 .btn.loading::after { content: ''; position: absolute; width: 20px; height: 20px; top: 50%; left: 50%; margin-top: -10px; margin-left: -10px; border: 3px solid rgba(255, 255, 255, 0.5); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; }
 .form-group { margin-bottom: 1.25rem; }
+.form-group label { font-weight: 600; display: block; margin-bottom: 0.5rem; }
 .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; font-size: 1rem; border: 2px solid var(--border-color); border-radius: var(--border-radius); box-sizing: border-box; }
