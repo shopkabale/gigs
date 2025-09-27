@@ -1,69 +1,95 @@
 import { db, auth } from './firebase-config.js';
-import { doc, getDoc, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { doc, getDoc, collection, addDoc, query, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getCloudinaryTransformedUrl } from './utils.js';
 
-const serviceDetailContainer = document.getElementById('service-detail-container');
+const serviceDetailContent = document.getElementById('service-detail-content');
+const qaList = document.getElementById('qa-list');
+const qaFormContainer = document.getElementById('qa-form-container');
+let currentUser = null;
 const urlParams = new URLSearchParams(window.location.search);
 const serviceId = urlParams.get('id');
-let currentUser = null;
 
-onAuthStateChanged(auth, (user) => {
-    currentUser = user;
-    if (serviceDetailContainer.innerHTML && !serviceDetailContainer.querySelector('.loading-spinner')) {
-        loadServiceDetails();
-    }
-});
+if (!serviceId) {
+    serviceDetailContent.innerHTML = '<h1>Service Not Found</h1>';
+} else {
+    onAuthStateChanged(auth, user => {
+        currentUser = user;
+        loadServiceAndProvider();
+    });
+}
 
-async function loadServiceDetails() {
-    if (!serviceId) {
-        serviceDetailContainer.innerHTML = '<p class="text-center text-error-color">No service ID provided.</p>';
-        return;
-    }
+async function loadServiceAndProvider() {
     try {
-        const serviceSnap = await getDoc(doc(db, "services", serviceId));
+        const serviceRef = doc(db, 'services', serviceId);
+        const serviceSnap = await getDoc(serviceRef);
+
         if (!serviceSnap.exists()) {
-            serviceDetailContainer.innerHTML = '<p class="text-center text-error-color">Service not found.</p>';
+            serviceDetailContent.innerHTML = '<h1>Service Not Found</h1>';
             return;
         }
-        const service = serviceSnap.data();
-        const providerSnap = await getDoc(doc(db, "users", service.providerId));
-        const provider = providerSnap.exists() ? providerSnap.data() : { name: 'Unknown User' };
-        
-        const reviewsQuery = query(collection(db, "users", service.providerId, "reviews"), orderBy("timestamp", "desc"));
-        const reviewsSnap = await getDocs(reviewsQuery);
-        const reviewsHtml = reviewsSnap.empty ? '<p class="text-muted">No reviews yet for this provider.</p>' : reviewsSnap.docs.map(reviewDoc => {
-            const review = reviewDoc.data();
-            return `<div class="bg-gray p-4 rounded-lg">
-                        <p class="font-bold">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</p>
-                        <p class="italic">"${review.text}"</p>
-                        <p class="text-sm text-muted text-right">- ${review.reviewerName || 'Anonymous'}</p>
-                    </div>`;
-        }).join('');
-        
-        const isOwner = currentUser && currentUser.uid === service.providerId;
-        serviceDetailContainer.innerHTML = `
-            <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;" class="md:grid-cols-3">
-                <div class="md:col-span-2">
-                    <img src="${service.imageUrl || 'https://placehold.co/800x600/e0e0e0/777?text=Service'}" alt="${service.title}" class="header-image fade-in">
-                    <h1 class="font-bold text-3xl mb-4 slide-up">${service.title}</h1>
-                    <p class="text-lg slide-up" style="animation-delay: 0.1s;">${service.description.replace(/\n/g, '<br>')}</p>
-                </div>
-                <div class="md:col-span-1 space-y-6">
-                    <div class="bg-white p-6 rounded-lg shadow-md slide-up" style="animation-delay: 0.2s;">
-                        <h2 class="font-bold text-xl mb-4">Service Provider</h2>
-                        <a href="profile.html?id=${service.providerId}" class="flex items-center gap-4 mb-4">
-                            <img src="${provider.profilePhotoUrl || 'https://placehold.co/64x64/e0e0e0/777?text=User'}" class="w-16 h-16 rounded-full">
-                            <div><p class="font-bold text-primary-color">${provider.name}</p><p class="text-sm text-muted">View Profile</p></div>
-                        </a>
-                        ${!isOwner && currentUser ? `<a href="chat.html?recipientId=${service.providerId}" class="btn btn-primary w-full">Contact Provider</a>` : ''}
-                        ${!currentUser ? `<a href="login.html" class="btn btn-secondary w-full">Login to Contact</a>` : ''}
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md slide-up" style="animation-delay: 0.3s;">
-                        <h2 class="font-bold text-xl mb-4">Reviews</h2>
-                        <div class="space-y-4">${reviewsHtml}</div>
-                    </div>
-                </div>
-            </div>`;
-    } catch (error) { console.error("Error:", error); serviceDetailContainer.innerHTML = '<p class="text-center text-error-color">Could not load details.</p>'; }
+
+        const serviceData = serviceSnap.data();
+        const sellerRef = doc(db, 'users', serviceData.providerId);
+        const sellerSnap = await getDoc(sellerRef);
+        const sellerData = sellerSnap.exists() ? sellerSnap.data() : {};
+
+        renderServiceDetails(serviceData, sellerData);
+        loadQandA(serviceData.providerId);
+
+    } catch (error) {
+        console.error("Error loading service:", error);
+    }
 }
-document.addEventListener('DOMContentLoaded', loadServiceDetails);
+
+function renderServiceDetails(service, seller) {
+    const whatsappLink = `https://wa.me/${seller.whatsapp}?text=Hello, I'm interested in your service for '${service.title}' on Kabale Online.`;
+    const optimizedImage = getCloudinaryTransformedUrl(service.imageUrl, 'full');
+    
+    serviceDetailContent.innerHTML = `
+        <div class="service-detail-container">
+            <div class="service-images">
+                <img src="${optimizedImage}" alt="${service.title}" class="animate-on-load">
+            </div>
+            <div class="service-info">
+                <div class="service-title-header animate-on-load" style="animation-delay: 0.2s;">
+                    <h1 id="service-title">${service.title}</h1>
+                    <button id="share-btn" title="Share"><i class="fa-solid fa-share-alt"></i></button>
+                </div>
+                <h2 id="service-price" class="animate-on-load" style="animation-delay: 0.3s;">Contact for Quote</h2>
+                <p id="service-description" class="animate-on-load" style="animation-delay: 0.4s;">${service.description}</p>
+                <div class="seller-card animate-on-load" style="animation-delay: 0.5s;">
+                    <h4>About the Provider</h4>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="${getCloudinaryTransformedUrl(seller.profilePhotoUrl, 'profile')}" alt="${seller.name}" class="profile-photo">
+                        <div>
+                            <strong>${seller.name || 'Provider'}</strong>
+                            ${(seller.role === 'admin' || seller.plan === 'premium') ? '<div class="badge-icon verified"><i class="fa-solid fa-circle-check"></i> Verified</div>' : ''}
+                        </div>
+                    </div>
+                    <div class="contact-buttons">
+                        <a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn"><i class="fa-solid fa-comment-dots"></i> Message Provider</a>
+                        ${seller.whatsapp ? `<a href="${whatsappLink}" target="_blank" class="cta-button whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Contact via WhatsApp</a>` : ''}
+                        <a href="profile.html?id=${service.providerId}" class="cta-button profile-btn">View Public Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    setupShareButton(service, seller);
+}
+
+function setupShareButton(service, seller) {
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn.addEventListener('click', async () => {
+        const shareText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name}\n*Service:* ${service.title}\n\n*Link:* ${window.location.href}`;
+        try {
+            await navigator.share({ title: `Service: ${service.title}`, text: shareText, url: window.location.href });
+        } catch (err) {
+            await navigator.clipboard.writeText(shareText);
+            alert('Service details copied to clipboard!');
+        }
+    });
+}
+
+// ... Q&A functions from your reference JS would go here ...
