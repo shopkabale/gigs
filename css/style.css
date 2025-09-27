@@ -1,4 +1,4 @@
-/* === KABALE ONLINE - FINAL STYLESHEET (Mobile-First) === */
+/* === KABALE ONLINE - FINAL STYLESHEET (Mobile-First & Image Fix v2) === */
 
 /* --- Variables & Base --- */
 :root {
@@ -57,8 +57,6 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
 .site-title { text-decoration: none; color: var(--text-dark); font-size: 1.5em; font-weight: 800; }
 .site-title:hover { text-decoration: none; }
 .site-title span { color: var(--primary-color); }
-.mb-6 { margin-bottom: 1.5rem; }
-.mt-6 { margin-top: 1.5rem; }
 .w-full { width: 100%; }
 
 /* --- Buttons & Forms --- */
@@ -66,11 +64,8 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); text-decoration: none; }
 .btn:disabled { cursor: not-allowed; opacity: 0.6; }
 .btn-primary { background-color: var(--primary-color); color: var(--bg-white); }
-.btn-primary:hover { background-color: var(--primary-hover); color: var(--bg-white); }
 .btn-secondary { background-color: var(--bg-gray); color: var(--text-dark); border-color: var(--border-color); }
-.btn-secondary:hover { background-color: #e2e6ea; color: var(--text-dark); }
 .btn-accent { background-color: var(--accent-color); color: var(--text-dark); }
-.btn-accent:hover { background-color: var(--accent-hover); color: var(--text-dark); }
 
 .form-group { margin-bottom: 1.25rem; }
 .form-group input, .form-group textarea { width: 100%; padding: 0.8rem 1rem; font-size: 1rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); transition: var(--transition); box-sizing: border-box; }
@@ -82,54 +77,51 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
 .header-top-bar { display: flex; align-items: center; justify-content: space-between; height: 70px; }
 .hamburger-menu { font-size: 24px; background: none; border: none; cursor: pointer; color: var(--text-dark); padding: 0; }
 .header-icons a { color: var(--text-dark); font-size: 22px; margin-left: 1rem; }
-.mobile-nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1090; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s; }
-.mobile-nav-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
 .mobile-nav { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background-color: #fff; box-shadow: var(--shadow-lg); z-index: 1100; transition: left 0.3s ease; display: flex; flex-direction: column; }
 .mobile-nav.active { left: 0; }
+.mobile-nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1090; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+.mobile-nav-overlay.active { opacity: 1; visibility: visible; }
 
-/* --- Cards --- */
+/* --- Cards & Images --- */
 .service-card { background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: var(--shadow); transition: var(--transition); text-decoration: none; color: var(--text-dark); }
-.service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); text-decoration: none; color: var(--text-dark); }
+.service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
 .card-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background-color: var(--bg-gray); }
 .card-content { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; }
-.card-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+.card-title { font-size: 1.125rem; font-weight: 600; }
 .card-provider { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
 .card-footer { margin-top: auto; }
 
-/* --- Layout Grids (Responsive) --- */
-.responsive-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Mobile: 1 column */
-    gap: 1.5rem;
+/* --- THIS IS THE FIX FOR LARGE IMAGES ON PROFILE/SERVICE PAGES --- */
+.header-image {
+    width: 100%;
+    max-width: 100%; /* Ensures image is never wider than its container */
+    height: auto;    /* Maintains aspect ratio */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
 }
 
-@media (min-width: 768px) {
-    .responsive-grid {
-        grid-template-columns: 2fr 1fr; /* Desktop: 2 columns */
-    }
-}
+/* --- Layout Grids (Responsive) --- */
+.responsive-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+@media (min-width: 768px) { .responsive-grid { grid-template-columns: 2fr 1fr; } }
 
 /* --- Other Components --- */
-.skeleton { animation: skeleton-shimmer 1.5s infinite linear; background-color: #e0e0e0; background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px); background-size: 250px; }
-@keyframes skeleton-shimmer { 0% { background-position: -150px; } 100% { background-position: 150px; } }
-
+.loading-spinner { display: flex; justify-content: center; align-items: center; padding: 4rem; }
+.spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .fade-in { animation: fadeIn 0.8s ease-in-out forwards; opacity: 0; }
 .slide-up { animation: slideUp 0.8s ease-in-out forwards; opacity: 0; transform: translateY(20px); }
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-.loading-spinner { display: flex; justify-content: center; align-items: center; padding: 4rem; }
-.spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
+/* --- Chat & Modal Styles --- */
 .conversation-list { min-height: 200px; }
 .conversation-item { display: block; padding: 1.25rem; border-bottom: 1px solid var(--border-color); transition: background-color 0.2s ease; text-decoration: none; color: inherit; }
 .conversation-item:last-child { border-bottom: none; }
-.conversation-item:hover { background-color: var(--bg-gray); text-decoration: none; }
+.conversation-item:hover { background-color: var(--bg-gray); }
 .conversation-item.unread { background-color: #f0f7ff; font-weight: 600; }
 .unread-dot { height: 10px; width: 10px; background-color: var(--primary-color); border-radius: 50%; display: inline-block; }
 .last-message { color: var(--text-muted); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
 .chat-messages { padding: 1rem; overflow-y: auto; }
 .message { padding: 0.75rem 1rem; border-radius: var(--border-radius-lg); margin-bottom: 0.75rem; max-width: 80%; word-wrap: break-word; }
 .message.sent { background-color: var(--primary-color); color: white; margin-left: auto; border-bottom-right-radius: 4px; }
@@ -137,11 +129,9 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
 .chat-form { display: flex; gap: 0.5rem; padding: 1rem; border-top: 1px solid var(--border-color); }
 .chat-form textarea { flex-grow: 1; resize: none; padding: 0.75rem; border-radius: 20px; border: 1px solid var(--border-color); min-height: 44px; box-sizing: border-box; max-height: 150px; overflow-y: auto; }
 .chat-form button { flex-shrink: 0; border-radius: 20px; }
-
 .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s; }
-.modal.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
-.modal-content { background: var(--bg-white); padding: 2rem; border-radius: var(--border-radius-lg); max-width: 450px; width: 90%; animation: modal-pop 0.3s ease forwards; transform: scale(0.9); }
+.modal.active { opacity: 1; visibility: visible; }
+.modal-content { background: var(--bg-white); padding: 2rem; border-radius: var(--border-radius-lg); max-width: 450px; width: 90%; transform: scale(0.9); transition: transform 0.3s ease; }
 .modal.active .modal-content { transform: scale(1); }
-@keyframes modal-pop { to { transform: scale(1); } }
 .star { cursor: pointer; font-size: 2.5rem; color: gray; transition: color 0.2s; }
 .star:hover, .star.selected { color: gold; }
