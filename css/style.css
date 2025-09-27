@@ -1,6 +1,5 @@
-/* This file is correct from the previous step and does not need to be changed. */
-/* It contains all the professional styles for the dashboard, cards, etc. */
-:root { --primary-color: #007bff; --accent-color: #ffc107; --bg-color: #f4f7f6; --card-bg: #ffffff; --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #e9ecef; --font-family: 'Inter', sans-serif; --border-radius: 12px; --shadow: 0 4px 15px rgba(0,0,0,0.07); }
+/* === KABALE ONLINE - FINAL & COMPLETE STYLESHEET === */
+:root { --primary-color: #007bff; --accent-color: #ffc107; --bg-color: #f4f7f6; --card-bg: #ffffff; --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #e9ecef; --error-color: #dc3545; --font-family: 'Inter', sans-serif; --border-radius: 12px; --shadow: 0 4px 15px rgba(0,0,0,0.07); --shadow-lg: 0 10px 30px rgba(0, 123, 255, 0.15); }
 html, body { overflow-x: hidden; }
 body { font-family: var(--font-family); margin: 0; background-color: var(--bg-color); color: var(--text-dark); }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
@@ -36,10 +35,10 @@ footer { background-color: var(--text-dark); color: white; padding: 40px 15px 20
 .services-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 992px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
-.service-card { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: var(--text-dark); }
+.service-card { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: var(--text-dark); display: flex; flex-direction: column; }
 .card-image { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-.card-content { padding: 1.5rem; }
-.card-price { font-size: 1.25rem; font-weight: 800; color: var(--primary-color); margin-top: 1rem; }
+.card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+.card-price { font-size: 1.25rem; font-weight: 800; color: var(--primary-color); margin-top: auto; padding-top: 1rem; }
 .service-detail-container { display: grid; grid-template-columns: 1fr; gap: 40px; }
 @media (min-width: 992px) { .service-detail-container { grid-template-columns: 2fr 1fr; } }
 .service-images img { width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow); }
@@ -77,6 +76,8 @@ input:checked + .slider:before { transform: translateX(22px); }
 .account-card-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; }
 .account-card-item span:first-child { font-weight: 600; color: var(--text-light); }
 .account-card-item span.plan { font-weight: bold; text-transform: capitalize; color: var(--primary-color); }
+#logout-btn { margin-top: 1rem; border: 2px solid var(--error-color); color: var(--error-color); background-color: transparent; }
+#logout-btn:hover { background-color: var(--error-color); color: white; }
 .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; }
 .modal.active { opacity: 1; visibility: visible; }
 .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); max-width: 500px; width: 90%; }
