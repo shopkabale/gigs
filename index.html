@@ -4,68 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kabale Online - Dynamic Services & Skills</title>
-    <meta name="description" content="The most modern platform to connect with skilled service providers in Kabale. Featuring dynamic animations and a professional interface.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="mobile-nav-overlay"></div>
     <header class="sticky-header">
-        <div class="header-top-bar container">
+        <div class="header-top-bar">
             <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
-            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <a href="https://www.kabaleonline.com/" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
             <div class="header-icons">
-                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
-                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+                <a href="https://www.kabaleonline.com/inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="https://www.kabaleonline.com/dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
             </div>
         </div>
     </header>
-
-    <div class="mobile-nav-overlay"></div>
     <nav class="mobile-nav">
-        <a href="index.html" class="site-title" style="padding: 1.25rem; border-bottom: 1px solid var(--border-color);">Kabale <span>Online</span></a>
-        <a href="browse.html" style="padding: 1rem; border-bottom: 1px solid #eee;">Browse Services</a>
-        <a href="dashboard.html" style="padding: 1rem;">Dashboard</a>
-        <a href="login.html" style="padding: 1rem; border-top: 1px solid #eee; margin-top: auto;">Login / Sign Up</a>
+        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-links">
+            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
+            <a href="https://www.kabaleonline.com/browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="https://www.kabaleonline.com/stories.html"><i class="fa-solid fa-book-open"></i> Campus Stories</a>
+            <a href="https://www.kabaleonline.com/inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
+        </div>
+        <div class="mobile-nav-footer">
+            <a href="https://www.kabaleonline.com/dashboard.html" class="post-button">Post Something Free</a>
+        </div>
     </nav>
 
     <main class="page-container container">
         <section style="text-align: center; padding: 4rem 0;">
-            <h1 style="font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1;" class="animate-on-load">
-                Modern Services <br>for a <span style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Vibrant Kabale</span>
+            <h1 style="font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 1rem; line-height: 1.1;" class="animate-on-load">
+                Professional Services <br>for a <span style="color: var(--primary-color);">Vibrant Kabale</span>
             </h1>
-            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; animation-delay: 0.2s;" class="animate-on-load">
-                Experience the next level of local commerce. A seamless, animated, and professional platform built for you.
+            <p style="font-size: 1.25rem; color: var(--text-light); max-width: 650px; margin: 0 auto 2.5rem; animation-delay: 0.2s;" class="animate-on-load">
+                The most modern platform to connect with skilled service providers in Kigezi.
             </p>
-            <div style="display: flex; justify-content: center; gap: 1rem; animation-delay: 0.4s;" class="animate-on-load">
-                <a href="browse.html" class="btn btn-primary">Browse Services</a>
-                <a href="dashboard.html" class="btn btn-secondary">Offer a Service</a>
-            </div>
         </section>
 
         <section style="padding: 3rem 0;">
-            <h2 style="font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.6s;">Featured Services</h2>
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.4s;">Featured Services</h2>
             <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
-                <!-- Skeleton cards will be replaced by animated cards -->
+                <!-- Services will be loaded here -->
             </div>
         </section>
     </main>
 
-    <footer style="background-color: var(--text-dark); color: white; padding: 3rem 0; text-align: center; margin-top: 3rem;">
-        <div class="container" style="color: var(--text-muted);">
-            <p>&copy; 2025 Kabale Online. Connecting Kigezi with Style.</p>
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Kabale <span>Online</span></div>
+            <p class="footer-tagline">Your Community Marketplace</p>
+            <div class="footer-socials">
+                <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://twitter.com/kabaleonline" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kabaleonline" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.kabaleonline.com/about.html">About</a>
+                <a href="https://www.kabaleonline.com/blog/">Blog</a>
+                <a href="https://www.kabaleonline.com/terms.html">Terms</a>
+                <a href="https://www.kabaleonline.com/contact.html">Contact</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script type="module" src="js/home.js"></script>
     <script>
-        // --- Mobile Navigation Toggle ---
-        const hamburger = document.querySelector('.hamburger-menu');
-        const mobileNav = document.querySelector('.mobile-nav');
-        const overlay = document.querySelector('.mobile-nav-overlay');
-        function closeNav() { mobileNav.classList.remove('active'); overlay.classList.remove('active'); }
-        hamburger.addEventListener('click', () => { mobileNav.classList.toggle('active'); overlay.classList.toggle('active'); });
-        overlay.addEventListener('click', closeNav);
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
     </script>
 </body>
 </html>
