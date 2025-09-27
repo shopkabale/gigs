@@ -64,6 +64,7 @@ footer { background-color: var(--text-dark); color: white; padding: 40px 15px 20
 .card-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background-color: var(--bg-color); }
 .card-content { padding: 1.5rem; }
 .card-title { font-size: 1.25rem; font-weight: 700; }
+.card-provider { color: var(--text-light); }
 
 /* --- Service/Profile Page Styles (From your reference) --- */
 .service-detail-container { display: grid; grid-template-columns: 1fr; gap: 30px; }
@@ -82,17 +83,19 @@ footer { background-color: var(--text-dark); color: white; padding: 40px 15px 20
 .whatsapp-btn { background-color: #25D366; color: white; }
 .profile-btn { background-color: #6c757d; color: white; }
 .profile-photo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); }
-.badge-icon.verified { color: var(--primary-color); font-weight: bold; }
+.badge-icon.verified { color: var(--primary-color); font-weight: bold; display: flex; align-items: center; gap: 5px; }
 .qa-section { background-color: white; padding: 20px; border-radius: 8px; margin-top: 30px; box-shadow: var(--shadow); }
-.qa-form textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-height: 80px; }
+.qa-form { margin-top: 1rem; }
+.qa-form textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-height: 80px; margin-bottom: 10px; }
 .question-item { border-bottom: 1px solid #eee; padding: 15px 0; }
 .answer-item { margin-top: 10px; padding-left: 20px; border-left: 3px solid #f0f0f0; }
+.form-group input, .form-group textarea { width: 100%; padding: 14px 16px; font-size: 1rem; border: 2px solid var(--border-color); border-radius: var(--border-radius); box-sizing: border-box; }
 
 /* General Animations */
 .animate-on-load { opacity: 0; transform: translateY(20px); animation: slide-up-fade-in 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
 @keyframes slide-up-fade-in { to { opacity: 1; transform: translateY(0); } }
 
-/* Other necessary styles from previous versions */
+/* Other necessary styles */
 .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 4rem; }
 .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
