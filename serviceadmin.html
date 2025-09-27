@@ -4,24 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Kabale Online</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="mobile-nav-overlay"></div>
     <header class="sticky-header">
-        <div class="header-top-bar container">
-            <a href="index.html" class="site-title">Kabale <span>Online</span> (Admin)</a>
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
         </div>
     </header>
-    
-    <main class="page-container container" id="admin-container">
-        <h1 class="mb-6">Admin Panel</h1>
-        <div id="admin-content">
-            <div class="loading-spinner"><div class="spinner"></div></div>
-            <!-- Admin content will be injected here if the user is an admin -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> Dashboard</a>
         </div>
+    </nav>
+
+    <main class="page-container container" id="admin-container">
+        <h1>Admin Panel</h1>
+        <div id="admin-content"><div class="loading-spinner"><div class="spinner"></div></div></div>
     </main>
 
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Kabale <span>Online</span></div>
+            <p class="footer-tagline">Your Community Marketplace</p>
+            <div class="footer-socials">
+                <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://twitter.com/kabaleonline" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kabaleonline" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.kabaleonline.com/about.html">About</a>
+                <a href="https://www.kabaleonline.com/blog/">Blog</a>
+                <a href="https://www.kabaleonline.com/terms.html">Terms</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
+        </div>
+    </footer>
     <script type="module" src="js/admin.js"></script>
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
+    </script>
 </body>
 </html>
