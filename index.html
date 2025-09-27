@@ -32,6 +32,7 @@
         </div>
         <div class="mobile-nav-footer">
             <a href="https://www.kabaleonline.com/dashboard.html" class="post-button">Post Something Free</a>
+             <p style="text-align: center; margin: 1rem 0 0; font-size: 0.9em;"><a href="login.html">Login</a> or <a href="signup.html">Sign Up</a></p>
         </div>
     </nav>
 
@@ -43,12 +44,17 @@
             <p style="font-size: 1.25rem; color: var(--text-light); max-width: 650px; margin: 0 auto 2.5rem; animation-delay: 0.2s;" class="animate-on-load">
                 The most modern platform to connect with skilled service providers in Kigezi.
             </p>
+            <!-- === ACTION BUTTONS RESTORED HERE === -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; animation-delay: 0.4s;" class="animate-on-load">
+                <a href="browse.html" class="cta-button message-btn" style="padding: 14px 28px; font-size: 1.1rem;">Browse Services</a>
+                <a href="dashboard.html" class="cta-button profile-btn" style="padding: 14px 28px; font-size: 1.1rem;">Offer a Service</a>
+            </div>
         </section>
 
         <section style="padding: 3rem 0;">
-            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.4s;">Featured Services</h2>
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;" class="animate-on-load" style="animation-delay: 0.6s;">Featured Services</h2>
             <div id="featured-services" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
-                <!-- Services will be loaded here -->
+                <!-- Services will be loaded by js/home.js -->
             </div>
         </section>
     </main>
