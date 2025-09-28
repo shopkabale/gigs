@@ -6,6 +6,30 @@
     <title>Browse Services - Kabale Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- === EMBEDDED CSS TO FIX THE 2-COLUMN LAYOUT - AS REQUESTED === -->
+    <style>
+        .services-grid {
+            display: grid;
+            /* --- THIS IS THE CRITICAL FIX --- */
+            /* It creates 2 columns and adds a gap between them */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        /* For larger tablet and desktop screens, we can add more columns */
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
@@ -21,16 +45,15 @@
         </div>
     </header>
     <nav class="mobile-nav">
-        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-header">Services Menu</div>
         <div class="mobile-nav-links">
-            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
-            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
-            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
             <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
-            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
         </div>
         <div class="mobile-nav-footer">
-            <a href="dashboard.html" class="post-button">Post Something Free</a>
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
         </div>
     </nav>
 
