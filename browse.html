@@ -7,8 +7,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- === EMBEDDED CSS FOR THIS PAGE - AS REQUESTED === -->
+    <!-- === EMBEDDED CSS TO FIX THE 2-COLUMN LAYOUT - AS REQUESTED === -->
     <style>
+        .services-grid {
+            display: grid;
+            /* --- THIS IS THE CRITICAL FIX --- */
+            /* It creates 2 columns and adds a gap between them */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem; /* A slightly smaller gap for mobile */
+        }
+        
+        .card-content {
+            padding: 1rem; /* Better padding for smaller cards */
+        }
+        
+        .card-content h3 {
+            font-size: 1rem; /* Smaller font for mobile grid */
+            margin-bottom: 0.25rem;
+        }
+        
+        .card-price {
+            font-size: 1.1rem; /* Adjust price font size */
+            margin-top: 0.5rem;
+        }
+
+        /* For larger tablet and desktop screens, we can add more columns */
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+            .card-content { padding: 1.5rem; }
+             .card-content h3 { font-size: 1.25rem; }
+        }
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         .browse-hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://placehold.co/1200x400/34495e/ffffff?text=Kabale+Services') no-repeat center center;
             background-size: cover;
@@ -22,7 +59,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.5rem;
-            margin-top: 3rem; /* Spacing after the request section */
+            margin-top: 3rem; 
         }
         @media (min-width: 768px) {
             .cta-cards-section {
@@ -41,7 +78,7 @@
             background: var(--card-bg);
             padding: 3rem 1rem;
             border-radius: var(--border-radius);
-            margin-top: 3rem; /* Spacing after the services grid */
+            margin-top: 3rem; 
         }
         .requests-banner {
             position: sticky;
