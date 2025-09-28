@@ -9,30 +9,22 @@ const editServiceModal = document.getElementById('edit-service-modal');
 const editServiceForm = document.getElementById('edit-service-form');
 let currentUser = null;
 
-// --- Cloudinary Upload Function (for GitHub Pages) ---
 async function uploadImageToCloudinary(file) {
-    // --- IMPORTANT: PASTE YOUR NEW CLOUDINARY DETAILS HERE ---
     const CLOUD_NAME = "YOUR_NEW_CLOUD_NAME";
     const UPLOAD_PRESET = "YOUR_NEW_UNSIGNED_PRESET_NAME";
-    // ----------------------------------------------------
-
     const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', UPLOAD_PRESET);
     const response = await fetch(url, { method: 'POST', body: formData });
-    if (!response.ok) throw new Error('Image upload failed. Please try a smaller file or check your connection.');
+    if (!response.ok) throw new Error('Upload failed.');
     const data = await response.json();
     return data.secure_url;
 }
 
 onAuthStateChanged(auth, user => {
-    if (user) { 
-        currentUser = user; 
-        loadDashboard(); 
-    } else { 
-        window.location.href = 'login.html'; 
-    }
+    if (user) { currentUser = user; loadDashboard(); } 
+    else { window.location.href = 'login.html'; }
 });
 
 function renderDashboard(userData, userServices) {
@@ -84,7 +76,6 @@ function renderDashboard(userData, userServices) {
 function renderProfileCard(userData, isEditing = false) {
     const profileCard = document.getElementById('profile-card');
     if (!profileCard) return;
-
     let content = isEditing ? `
         <h2>Edit Profile</h2>
         <form id="update-profile-form">
@@ -117,8 +108,6 @@ async function loadDashboard() {
         if (!userSnap.exists()) throw new Error("User data not found!");
         let userData = userSnap.data();
         if (!userData.plan) { await updateDoc(userRef, { plan: 'spark' }); userData.plan = 'spark'; }
-        
-        // --- THIS IS THE FIX: A simple query that will not fail ---
         const servicesQuery = query(collection(db, "services"), where("providerId", "==", currentUser.uid));
         const servicesSnapshot = await getDocs(servicesQuery);
         const userServices = servicesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -143,14 +132,9 @@ function attachProfileEventListeners(userData) {
             const submitButton = e.target.querySelector('button[type="submit"]');
             submitButton.disabled = true; submitButton.classList.add('loading');
             try {
-                const dataToUpdate = { 
-                    name: document.getElementById('profile-name').value, 
-                    bio: document.getElementById('profile-bio').value 
-                };
+                const dataToUpdate = { name: document.getElementById('profile-name').value, bio: document.getElementById('profile-bio').value };
                 const photoFile = document.getElementById('profile-photo-file').files[0];
-                if (photoFile) {
-                    dataToUpdate.profilePhotoUrl = await uploadImageToCloudinary(photoFile);
-                }
+                if (photoFile) dataToUpdate.profilePhotoUrl = await uploadImageToCloudinary(photoFile);
                 await updateDoc(doc(db, "users", currentUser.uid), dataToUpdate);
                 loadDashboard();
             } catch (error) {
@@ -205,7 +189,7 @@ function attachEventListeners(userData) {
     });
     
     const serviceList = document.getElementById('user-services-list');
-    if (serviceList) {
+    if(serviceList) {
         serviceList.addEventListener('click', async (e) => {
             const button = e.target.closest('.action-btn');
             if (!button) return;
@@ -226,7 +210,7 @@ function attachEventListeners(userData) {
             }
         });
     }
-
+    
     document.getElementById('cancel-edit-btn').addEventListener('click', () => editServiceModal.classList.remove('active'));
     
     editServiceForm.addEventListener('submit', async (e) => {
