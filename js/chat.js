@@ -60,9 +60,11 @@ function renderChatShell(recipientName) {
                 <div class="loading-spinner"><div class="spinner"></div></div>
             </div>
             <form id="chat-form" class="chat-form">
-                <textarea id="message-input" placeholder="Type a message..." required rows="1"></textarea>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
+    <textarea id="message-input" placeholder="Type a message..." required rows="1"></textarea>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+</form>
         </div>
     `;
     document.getElementById('chat-form').addEventListener('submit', sendMessage);
