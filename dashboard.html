@@ -167,7 +167,33 @@
         .dashboard-card a.btn {
             margin-bottom: 1rem; /* Adds spacing between the two buttons */
         }
-    
+    /* === FINAL FIX FOR BUTTON OVERLAP & SPACING === */
+        .account-card .btn {
+            display: block; /* Forces each button onto its own line */
+            width: 100%;    /* Ensures they fill the container width */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+            margin-bottom: 1rem; /* Adds spacing between the buttons */
+            font-weight: bold;
+        }
+        
+        #upgrade-plan-btn {
+            /* Light Yellow/Orange as requested */
+            background-color: #fffbeb; 
+            border: 2px solid var(--accent-color);
+            color: #b47700;
+        }
+
+        #logout-btn {
+            border: 2px solid var(--error-color);
+            color: var(--error-color);
+            background-color: transparent;
+        }
+
+        #logout-btn:hover {
+            background-color: var(--error-color);
+            color: white;
+        }
+
     </style>
 </head>
 <body>
