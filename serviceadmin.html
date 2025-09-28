@@ -6,28 +6,57 @@
     <title>Admin Panel - Kabale Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- === EMBEDDED CSS FOR ADMIN PAGE - AS REQUESTED === -->
+    <style>
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: single column */
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .admin-grid {
+                grid-template-columns: 1fr 1fr; /* Desktop: two columns */
+            }
+        }
+        .admin-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow-x: auto; /* Allow horizontal scrolling on small tables */
+        }
+        .admin-card h2 {
+            font-size: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .admin-table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .admin-table th, .admin-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .admin-table th {
+            font-weight: 700;
+        }
+        .user-plan-select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+        }
+    </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header">
-        <div class="header-top-bar">
-            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
-            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
-            <div class="header-spacer"></div>
-            <div class="header-icons">
-                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
-                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
-            </div>
-        </div>
-    </header>
-    <nav class="mobile-nav">
-        <div class="mobile-nav-header">Kabale Online</div>
-        <div class="mobile-nav-links">
-            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
-            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
-            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> Dashboard</a>
-        </div>
-    </nav>
+    <header class="sticky-header"><!-- Your Unified Header --></header>
+    <nav class="mobile-nav"><!-- Your Unified Mobile Nav --></nav>
 
     <main class="page-container container" id="admin-container">
         <h1>Admin Panel</h1>
