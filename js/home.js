@@ -5,11 +5,8 @@ import { getCloudinaryTransformedUrl } from './utils.js';
 const featuredServicesContainer = document.getElementById('featured-services');
 
 // Predefined background colors and text styles
-
 const FEATURED_BG_COLORS = ['#ffe082', '#ffb74d', '#81c784', '#64b5f6', '#4dd0e1', '#b39ddb'];
-
 const FEATURED_TEXT_COLORS = ['#000', '#000', '#000', '#fff', '#000', '#000'];
-
 const FEATURED_FONT_STYLES = ['normal','italic','normal','italic','normal','italic'];
 
 async function loadFeaturedServices() {
@@ -39,13 +36,21 @@ async function loadFeaturedServices() {
             const textColor = FEATURED_TEXT_COLORS[index % FEATURED_TEXT_COLORS.length];
             const fontStyle = FEATURED_FONT_STYLES[index % FEATURED_FONT_STYLES.length];
 
-            const priceHtml = service.price ? `<p class="card-price">UGX ${service.price.toLocaleString()}</p>` : `<p class="card-price">Contact for Quote</p>`;
+            const priceHtml = service.price 
+                ? `<p class="card-price">UGX ${service.price.toLocaleString()}</p>` 
+                : `<p class="card-price">Contact for Quote</p>`;
 
             return `
                 <a href="service.html?id=${service.id}" class="featured-service-card" 
-                   style="background-color: ${bgColor}; color: ${textColor}; font-style: ${fontStyle}; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; text-decoration:none; transition: transform 0.3s, box-shadow 0.3s;">
-                    <div style="width:100%; padding-top:60%; background-image: url('${getCloudinaryTransformedUrl(service.imageUrl, 'full')}'); background-size:cover; background-position:center;"></div>
-                    <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column; justify-content:space-between;">
+                   style="text-decoration:none; transition: transform 0.3s, box-shadow 0.3s;">
+                   
+                    <!-- FULL IMAGE -->
+                    <img src="${getCloudinaryTransformedUrl(service.imageUrl, 'full')}" 
+                         alt="${service.title || 'Service'}" 
+                         style="width:100%; height:auto; display:block; border-radius: 12px 12px 0 0; object-fit:cover;">
+
+                    <!-- TEXT CONTENT -->
+                    <div style="background-color: ${bgColor}; color: ${textColor}; font-style: ${fontStyle}; padding: 1.5rem; border-radius: 0 0 12px 12px; display:flex; flex-direction:column; justify-content:space-between;">
                         <h3 style="margin:0 0 0.5rem 0;">${service.title || 'No Title'}</h3>
                         <p style="margin:0 0 0.5rem 0;">By ${service.providerName || 'Unknown'}</p>
                         ${priceHtml}
