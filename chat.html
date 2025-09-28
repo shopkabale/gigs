@@ -6,6 +6,19 @@
     <title>Chat - Kabale Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .chat-container { display: flex; flex-direction: column; height: 75vh; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow); }
+        .chat-header { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border-color); }
+        .chat-header a { font-size: 1.2rem; color: var(--text-light); }
+        .chat-header h2 { font-size: 1.25rem; margin: 0; }
+        .chat-messages { flex-grow: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; }
+        .message { padding: 10px 15px; border-radius: 20px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; line-height: 1.4; }
+        .message.sent { background: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .message.received { background: #e9ecef; color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 5px; }
+        .chat-form { display: flex; gap: 10px; padding: 1rem; border-top: 1px solid var(--border-color); }
+        .chat-form textarea { flex-grow: 1; resize: none; padding: 12px 18px; border-radius: 25px; border: 2px solid var(--border-color); min-height: 50px; box-sizing: border-box; }
+        .chat-form button { flex-shrink: 0; border-radius: 25px; padding: 0 25px; }
+    </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
@@ -21,16 +34,15 @@
         </div>
     </header>
     <nav class="mobile-nav">
-        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-header">Services Menu</div>
         <div class="mobile-nav-links">
-            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
-            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
-            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
             <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
-            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
         </div>
         <div class="mobile-nav-footer">
-            <a href="dashboard.html" class="post-button">Post Something Free</a>
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
         </div>
     </nav>
 
