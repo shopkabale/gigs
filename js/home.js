@@ -5,7 +5,8 @@ import { getCloudinaryTransformedUrl } from './utils.js';
 const featuredServicesContainer = document.getElementById('featured-services');
 
 // Predefined background colors and text styles
-const FEATURED_BG_COLORS = ['#007bff','#28a745','#ffc107','#17a2b8','#6f42c1','#fd7e14'];
+
+const FEATURED_BG_COLORS = ['#ffe082', '#ffb74d', '#81c784', '#64b5f6', '#4dd0e1', '#b39ddb'];
 const FEATURED_TEXT_COLORS = ['#fff','#fff','#000','#fff','#fff','#000'];
 const FEATURED_FONT_STYLES = ['normal','italic','normal','italic','normal','italic'];
 
