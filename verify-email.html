@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - Kabale Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .verification-card { text-align: center; max-width: 500px; margin: 2rem auto; }
+        .verification-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .success-message { color: var(--success-color, #28a745); text-align: center; margin-bottom: 1rem; font-weight: bold; }
+        .error-message { color: var(--error-color, #dc3545); text-align: center; margin-bottom: 1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="mobile-nav-overlay"></div>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Services Menu</div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+        </div>
+        <div class="mobile-nav-footer">
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
+        </div>
+    </nav>
+
+    <main class="page-container container">
+        <div class="dashboard-card verification-card">
+            <i class="fas fa-envelope-open-text"></i>
+            <h1>Verify Your Email</h1>
+            <p class="text-light">We've sent a verification link to <strong id="user-email-placeholder">your email</strong>. Please check your inbox (and spam folder) to complete your registration.</p>
+            <p id="success-message" style="display: none;"></p>
+            <p id="error-message" style="display: none;"></p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+                <button id="resend-btn" class="btn btn-primary">Resend Verification Email</button>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Kabale <span>Online</span></div>
+            <p class="footer-tagline">Your Community Marketplace</p>
+            <div class="footer-socials">
+                <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://twitter.com/kabaleonline" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kabaleonline" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.kabaleonline.com/about.html">About</a>
+                <a href="https://www.kabaleonline.com/blog/">Blog</a>
+                <a href="https://www.kabaleonline.com/terms.html">Terms</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script type="module" src="js/auth.js"></script>
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
