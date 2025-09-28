@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-        <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-overlay"></div>
     <header class="sticky-header">
         <div class="header-top-bar">
             <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
@@ -54,6 +54,11 @@
             <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
             <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
         </div>
+        <div class="mobile-nav-footer">
+            <a href="dashboard.html" class="post-button">Post Something Free</a>
+        </div>
+    </nav>
+
     <main class="page-container container" id="dashboard-container">
         <div class="loading-spinner"><div class="spinner"></div></div>
     </main>
@@ -93,7 +98,7 @@
         </div>
     </div>
 
-        <footer>
+    <footer>
         <div class="container">
             <div class="footer-logo">Kabale <span>Online</span></div>
             <p class="footer-tagline">Your Community Marketplace</p>
@@ -110,7 +115,10 @@
             <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
         </div>
     </footer>
-    <script type="module" src="js/admin.js"></script>
+    
+    <!-- === THIS IS THE CRITICAL FIX: It now correctly loads dashboard.js === -->
+    <script type="module" src="js/dashboard.js"></script>
+    
     <script>
         document.querySelector('.hamburger-menu').addEventListener('click', () => {
             document.querySelector('.mobile-nav').classList.toggle('active');
