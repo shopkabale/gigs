@@ -11,29 +11,28 @@ import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs
 
 // --- HELPER FUNCTION FOR MESSAGES ---
 function showMessage(element, message, isError = false) {
+    if (!element) return;
     element.textContent = message;
     element.className = isError ? 'error-message' : 'success-message';
     element.style.display = 'block';
-    setTimeout(() => { element.style.display = 'none'; }, 5000);
+    setTimeout(() => { element.style.display = 'none'; }, 6000);
 }
 
 // --- CORE AUTH LOGIC ---
 onAuthStateChanged(auth, async (user) => {
+    const onAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
     const onVerifyPage = window.location.pathname.includes('verify-email.html');
     
     if (user) {
-        await user.reload(); // Get latest user status
+        await user.reload(); 
         if (user.emailVerified) {
-            // If verified, send to dashboard. Redirect if they land on auth pages.
-            if (onVerifyPage || window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html')) {
+            if (onAuthPage || onVerifyPage) {
                 window.location.href = 'dashboard.html';
             }
         } else {
-            // If not verified, force them to the verification page.
             if (!onVerifyPage) {
                 window.location.href = 'verify-email.html';
             }
-            // If they are on the verify page, update the email placeholder
             const emailPlaceholder = document.getElementById('user-email-placeholder');
             if (emailPlaceholder) emailPlaceholder.textContent = user.email;
         }
@@ -57,7 +56,6 @@ if (loginForm) {
         
         try {
             await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-            // onAuthStateChanged will handle redirect
         } catch (error) {
             showMessage(errorMessage, 'Invalid email or password.', true);
             loginBtn.disabled = false;
@@ -112,7 +110,6 @@ if (signupForm) {
 
             await sendEmailVerification(user);
             
-            // Show success message and clear form, onAuthStateChanged will redirect.
             showMessage(successMessage, "Success! Please check your email to verify your account.");
             signupForm.reset();
             
@@ -151,6 +148,6 @@ if (resendBtn) {
 
     logoutBtn.addEventListener('click', () => {
         signOut(auth);
-        window.location.href = 'login.html'; // Redirect to login after logout
+        window.location.href = 'login.html';
     });
 }
