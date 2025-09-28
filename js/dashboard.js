@@ -7,11 +7,11 @@ const dashboardContainer = document.getElementById('dashboard-container');
 const addServiceModal = document.getElementById('add-service-modal');
 const editServiceModal = document.getElementById('edit-service-modal');
 let currentUser = null;
-let currentUserData = null; // To store user data globally within this module
+let currentUserData = null;
 
 async function uploadImageToCloudinary(file) {
-    const CLOUD_NAME = "dodtknwvv";
-    const UPLOAD_PRESET = "to9fos62";
+    const CLOUD_NAME = "YOUR_NEW_CLOUD_NAME";
+    const UPLOAD_PRESET = "YOUR_NEW_UNSIGNED_PRESET_NAME";
     const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
     const formData = new FormData();
     formData.append('file', file);
@@ -47,13 +47,16 @@ function renderDashboard(userData, userServices) {
 
     const canAddService = userData.plan !== 'spark' || userServices.length < 1;
 
+    // --- THIS IS THE FINAL FIX: The button is now smart ---
+    const heroButtonHtml = canAddService
+        ? `<button id="show-add-service-modal-btn" class="btn btn-primary" style="width: auto; background: var(--accent-color); color: var(--text-dark);">Upload a New Service</button>`
+        : `<a href="upgrade.html" class="btn btn-primary" style="width: auto; background: var(--accent-color); color: var(--text-dark); text-decoration: none;">Upgrade to Add More</a>`;
+
     dashboardContainer.innerHTML = `
         <div class="dashboard-hero">
             <h1>Welcome, ${userData.name.split(' ')[0]}!</h1>
             <p>This is your personal dashboard. Manage your services and update your profile.</p>
-            <button id="show-add-service-modal-btn" class="btn btn-primary" style="width: auto; background: var(--accent-color); color: var(--text-dark);" ${!canAddService ? 'disabled' : ''}>
-                ${canAddService ? 'Upload a New Service' : 'Upgrade to Add More'}
-            </button>
+            ${heroButtonHtml}
         </div>
         <div class="dashboard-grid">
             <div class="dashboard-card">
@@ -120,28 +123,15 @@ async function loadDashboard() {
     }
 }
 
-// --- THIS IS THE CRITICAL FIX FOR ALL BUGS ---
-// This uses a single, persistent event listener for the entire page.
-// This prevents duplicate listeners and ensures all buttons work correctly.
+// Event delegation for the whole document to handle all clicks
 document.addEventListener('click', async (e) => {
-    // --- Static Buttons ---
     if (e.target.id === 'logout-btn') signOut(auth);
+    if (e.target.id === 'show-add-service-modal-btn') addServiceModal.classList.add('active');
     if (e.target.id === 'cancel-add-btn') addServiceModal.classList.remove('active');
     if (e.target.id === 'cancel-edit-btn') editServiceModal.classList.remove('active');
-    
-    if (e.target.id === 'show-add-service-modal-btn') {
-        if (e.target.disabled) {
-            alert("Free plan users can only list one service. Please upgrade for more.");
-        } else {
-            addServiceModal.classList.add('active');
-        }
-    }
-
-    // --- Profile Card Buttons ---
     if (e.target.id === 'edit-profile-btn') renderProfileCard(currentUserData, true);
     if (e.target.id === 'cancel-profile-edit-btn') renderProfileCard(currentUserData, false);
 
-    // --- Service List Buttons ---
     const actionButton = e.target.closest('.action-btn');
     if (actionButton) {
         const serviceId = actionButton.dataset.id;
@@ -162,49 +152,49 @@ document.addEventListener('click', async (e) => {
     }
 });
 
-// --- Listeners for Form Submissions ---
-document.getElementById('add-service-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitButton = e.target.querySelector('button[type="submit"]');
-    submitButton.disabled = true; submitButton.classList.add('loading');
-    try {
-        const imageFile = document.getElementById('service-image-file').files[0];
-        if (!imageFile) throw new Error("Please select an image.");
-        const imageUrl = await uploadImageToCloudinary(imageFile);
-        await addDoc(collection(db, "services"), {
-            title: document.getElementById('service-title').value,
-            price: Number(document.getElementById('service-price').value),
-            whatsapp: document.getElementById('service-whatsapp').value,
-            description: document.getElementById('service-desc').value,
-            imageUrl, providerId: currentUser.uid, providerName: currentUserData.name,
-            createdAt: serverTimestamp(), isFeatured: false
-        });
-        e.target.reset(); addServiceModal.classList.remove('active'); loadDashboard();
-    } catch(error) { alert(error.message); } 
-    finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
-});
-
-document.getElementById('edit-service-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const serviceId = document.getElementById('edit-service-id').value;
-    const submitButton = e.target.querySelector('#update-service-btn');
-    submitButton.disabled = true; submitButton.classList.add('loading');
-    try {
-        const dataToUpdate = {
-            title: document.getElementById('edit-service-title').value,
-            price: Number(document.getElementById('edit-service-price').value),
-            whatsapp: document.getElementById('edit-service-whatsapp').value,
-            description: document.getElementById('edit-service-desc').value,
-        };
-        const imageFile = document.getElementById('edit-service-image').files[0];
-        if (imageFile) dataToUpdate.imageUrl = await uploadImageToCloudinary(imageFile);
-        await updateDoc(doc(db, "services", serviceId), dataToUpdate);
-        editServiceModal.classList.remove('active'); loadDashboard();
-    } catch (error) { alert("Failed to update service."); } 
-    finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
-});
-
+// Event delegation for form submissions
 document.addEventListener('submit', async (e) => {
+    if (e.target.id === 'add-service-form') {
+        e.preventDefault();
+        const submitButton = e.target.querySelector('button[type="submit"]');
+        submitButton.disabled = true; submitButton.classList.add('loading');
+        try {
+            const imageFile = document.getElementById('service-image-file').files[0];
+            if (!imageFile) throw new Error("Please select an image.");
+            const imageUrl = await uploadImageToCloudinary(imageFile);
+            await addDoc(collection(db, "services"), {
+                title: document.getElementById('service-title').value,
+                price: Number(document.getElementById('service-price').value),
+                whatsapp: document.getElementById('service-whatsapp').value,
+                description: document.getElementById('service-desc').value,
+                imageUrl, providerId: currentUser.uid, providerName: currentUserData.name,
+                createdAt: serverTimestamp(), isFeatured: false
+            });
+            e.target.reset(); addServiceModal.classList.remove('active'); loadDashboard();
+        } catch(error) { alert(error.message); } 
+        finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
+    }
+    
+    if (e.target.id === 'edit-service-form') {
+        e.preventDefault();
+        const serviceId = document.getElementById('edit-service-id').value;
+        const submitButton = e.target.querySelector('#update-service-btn');
+        submitButton.disabled = true; submitButton.classList.add('loading');
+        try {
+            const dataToUpdate = {
+                title: document.getElementById('edit-service-title').value,
+                price: Number(document.getElementById('edit-service-price').value),
+                whatsapp: document.getElementById('edit-service-whatsapp').value,
+                description: document.getElementById('edit-service-desc').value,
+            };
+            const imageFile = document.getElementById('edit-service-image').files[0];
+            if (imageFile) dataToUpdate.imageUrl = await uploadImageToCloudinary(imageFile);
+            await updateDoc(doc(db, "services", serviceId), dataToUpdate);
+            editServiceModal.classList.remove('active'); loadDashboard();
+        } catch (error) { alert("Failed to update service."); } 
+        finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
+    }
+
     if (e.target.id === 'update-profile-form') {
         e.preventDefault();
         const submitButton = e.target.querySelector('button[type="submit"]');
