@@ -34,16 +34,24 @@ async function loadServiceAndProvider() {
 
 function renderServiceDetails(service, seller) {
     const whatsappLink = `https://wa.me/${seller.whatsapp}?text=Hello, I'm interested in your service for '${service.title}' on Kabale Online.`;
+    const optimizedImage = getCloudinaryTransformedUrl(service.imageUrl, 'full');
     
+    // --- THIS IS THE FINAL FIX ---
+    // It checks if 'service.price' exists and is a number before trying to format it.
+    // If not, it shows a default message instead of crashing.
+    const priceHtml = (typeof service.price === 'number')
+        ? `<h2 style="font-size: 1.8rem; color: var(--primary-color);">UGX ${service.price.toLocaleString()}</h2>`
+        : `<h2 style="font-size: 1.8rem; color: var(--primary-color);">Contact for Quote</h2>`;
+
     serviceDetailContent.innerHTML = `
         <div class="service-detail-container">
             <div class="service-images">
-                <img src="${getCloudinaryTransformedUrl(service.imageUrl, 'full')}" alt="${service.title}">
+                <img src="${optimizedImage}" alt="${service.title || 'Service Image'}">
             </div>
             <div class="service-info">
-                <h1>${service.title}</h1>
-                <h2 style="font-size: 1.8rem; color: var(--primary-color);">UGX ${service.price.toLocaleString()}</h2>
-                <p style="white-space: pre-wrap; margin-top: 1.5rem;">${service.description}</p>
+                <h1>${service.title || 'No Title'}</h1>
+                ${priceHtml}
+                <p style="white-space: pre-wrap; margin-top: 1.5rem;">${service.description || 'No description provided.'}</p>
                 <div class="seller-card">
                     <h4>About the Provider</h4>
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
