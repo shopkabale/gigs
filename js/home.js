@@ -7,7 +7,9 @@ const featuredServicesContainer = document.getElementById('featured-services');
 // Predefined background colors and text styles
 
 const FEATURED_BG_COLORS = ['#ffe082', '#ffb74d', '#81c784', '#64b5f6', '#4dd0e1', '#b39ddb'];
-const FEATURED_TEXT_COLORS = ['#fff','#fff','#000','#fff','#fff','#000'];
+
+const FEATURED_TEXT_COLORS = ['#000', '#000', '#000', '#fff', '#000', '#000'];
+
 const FEATURED_FONT_STYLES = ['normal','italic','normal','italic','normal','italic'];
 
 async function loadFeaturedServices() {
