@@ -16,12 +16,13 @@
             padding: 4rem 1rem;
             text-align: center;
             border-radius: var(--border-radius);
+            margin-bottom: 3rem;
         }
         .cta-cards-section {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.5rem;
-            margin: 3rem 0;
+            margin-top: 3rem; /* Spacing after the request section */
         }
         @media (min-width: 768px) {
             .cta-cards-section {
@@ -40,7 +41,7 @@
             background: var(--card-bg);
             padding: 3rem 1rem;
             border-radius: var(--border-radius);
-            margin-top: 3rem;
+            margin-top: 3rem; /* Spacing after the services grid */
         }
         .requests-banner {
             position: sticky;
@@ -54,7 +55,6 @@
         }
         .requests-banner-inner {
             display: inline-block;
-            /* Animation speed: 30s for a full loop */
             animation: scroll-banner 30s linear infinite;
         }
         .requests-banner-inner a {
@@ -102,22 +102,27 @@
     </div>
 
     <main class="page-container container">
+        
+        <!-- SECTION 1: HERO (AS REQUESTED) -->
         <section class="browse-hero">
             <h1>Find Any Service, On Demand</h1>
             <p>From plumbing to tutoring, connect with trusted local professionals right here in Kabale.</p>
         </section>
 
-<h1 style="text-align: center;">All Available Services</h1>
+        <!-- SECTION 2: ALL AVAILABLE SERVICES (AS REQUESTED) -->
+        <h1 style="text-align: center;">All Available Services</h1>
         <div id="services-grid" class="services-grid">
             <div class="loading-spinner"><div class="spinner"></div></div>
         </div>
 
-<section class="request-cta-section">
+        <!-- SECTION 3: CAN'T FIND A SERVICE (AS REQUESTED) -->
+        <section class="request-cta-section">
             <h2>Can't Find The Service You Need?</h2>
             <p class="text-light" style="max-width: 500px; margin: 0 auto 1.5rem;">Let our community of providers know what you're looking for.</p>
             <a href="requests.html" class="cta-button message-btn" style="width: auto; padding: 12px 25px;">Post a Request</a>
         </section>
-
+        
+        <!-- SECTION 4: CROSS-PROMOTION (AS REQUESTED) -->
         <section class="cta-cards-section">
             <div class="cta-card">
                 <h3>Looking for Products?</h3>
@@ -131,9 +136,6 @@
             </div>
         </section>
 
-        
-
-        
     </main>
 
     <footer>
