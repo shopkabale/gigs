@@ -4,8 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kabale Online - Professional Local Services</title>
+    <meta name="description" content="Kabale Online provides professional services in Kabale. Discover, hire, and connect with skilled local professionals for any need. Post your service for free.">
+    <meta name="keywords" content="Kabale Online, Kabale services, professional services Kabale, local services, hire professionals Kabale, service marketplace">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0,123,255,0.85), rgba(0,123,255,0.7)), url('https://www.kabaleonline.com/assets/services-hero.jpg') no-repeat center/cover;
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.5s ease;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-buttons a {
+            display: inline-block;
+            padding: 12px 28px;
+            margin: 0.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #000;
+            background-color: #ffc107;
+            transition: transform 0.3s;
+        }
+        .cta-buttons a:hover {
+            transform: scale(1.05);
+        }
+
+        /* INFO SECTIONS */
+        .info-section {
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+        .info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .info-section p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .info-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .info-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .info-card p {
+            color: var(--text-light);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
@@ -35,20 +122,75 @@
     </nav>
 
     <main class="page-container container">
-        <section style="text-align: center; padding: 3rem 0;">
-             <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.5rem;">Professional Services <br>for a <span style="color: var(--primary-color);">Vibrant Kabale</span></h1>
-             <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-                <a href="browse.html" class="cta-button message-btn" style="padding: 14px 28px; font-size: 1.1rem;">Browse All Services</a>
-                <a href="dashboard.html" class="cta-button profile-btn" style="padding: 14px 28px; font-size: 1.1rem;">Post Your Service</a>
+
+        <!-- HERO -->
+        <section class="hero">
+            <h1>Find Professional Services in Kabale</h1>
+            <p>Discover, hire, and connect with skilled local professionals for any service need. Fast, secure, and community-driven.</p>
+            <div class="cta-buttons">
+                <a href="browse.html">Browse Services</a>
+                <a href="dashboard.html">Post Your Service</a>
             </div>
         </section>
 
-        <section>
-            <h2 style="font-size: 2rem; text-align: center; margin-bottom: 2.5rem;">Featured Services</h2>
+        <!-- WHAT WE DO -->
+        <section class="info-section">
+            <h2>What Kabale Online Offers</h2>
+            <p>We provide a platform for Kabale residents to easily access and offer professional services. From home repairs to personal tutoring, you can find trusted service providers quickly.</p>
+
+<!-- FEATURED SERVICES -->
+        <section class="info-section">
+            <h2>Featured Services</h2>
             <div id="featured-services">
                 <div class="loading-spinner"><div class="spinner"></div></div>
             </div>
         </section>
+
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fa-solid fa-wrench"></i>
+                    <h3>Home & Repair Services</h3>
+                    <p>Connect with professionals for plumbing, electrical, carpentry, and other repairs.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <h3>Education & Tutoring</h3>
+                    <p>Hire tutors, trainers, and experts for academic and skill development.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-people-group"></i>
+                    <h3>Events & Personal Services</h3>
+                    <p>Book photographers, DJs, caterers, and other personal service providers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE US -->
+        <section class="info-section" style="background:#f4f7f6; border-radius:12px;">
+            <h2>Why Choose Kabale Online?</h2>
+            <p>Our platform is designed for simplicity, safety, and growth of Kabale’s local service community.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>Fast & Easy</h3>
+                    <p>Post or find services in under 2 minutes with no approval delays.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-lock"></i>
+                    <h3>Safe & Private</h3>
+                    <p>All interactions are secure and buyers contact providers directly.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-handshake"></i>
+                    <h3>Community-Focused</h3>
+                    <p>We support local businesses and professionals while connecting neighbors.</p>
+                </div>
+            </div>
+        </section>
+
+        
+
     </main>
 
     <footer>
