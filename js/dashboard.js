@@ -7,11 +7,11 @@ const dashboardContainer = document.getElementById('dashboard-container');
 const addServiceModal = document.getElementById('add-service-modal');
 const editServiceModal = document.getElementById('edit-service-modal');
 let currentUser = null;
-let currentUserData = null;
+let currentUserData = null; // To store user data globally within this module
 
 async function uploadImageToCloudinary(file) {
-    const CLOUD_NAME = "dodtknwvv";
-    const UPLOAD_PRESET = "to9fos62";
+    const CLOUD_NAME = "YOUR_NEW_CLOUD_NAME";
+    const UPLOAD_PRESET = "YOUR_NEW_UNSIGNED_PRESET_NAME";
     const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
     const formData = new FormData();
     formData.append('file', file);
@@ -32,7 +32,7 @@ onAuthStateChanged(auth, user => {
 });
 
 function renderDashboard(userData, userServices) {
-    currentUserData = userData; // Store user data for later use
+    currentUserData = userData;
     const sortedServices = userServices.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
     const servicesHtml = sortedServices.length > 0 ? sortedServices.map(service => `
         <div class="service-list-item">
@@ -120,19 +120,33 @@ async function loadDashboard() {
     }
 }
 
-// --- THIS IS THE CRITICAL FIX FOR THE DUPLICATE SERVICES BUG ---
-// This uses event delegation to handle clicks on the dashboard.
-// It sets up the listeners ONCE and they work even when the content is re-rendered.
-dashboardContainer.addEventListener('click', async (e) => {
-    // --- Edit/Delete Service Logic ---
+// --- THIS IS THE CRITICAL FIX FOR ALL BUGS ---
+// This uses a single, persistent event listener for the entire page.
+// This prevents duplicate listeners and ensures all buttons work correctly.
+document.addEventListener('click', async (e) => {
+    // --- Static Buttons ---
+    if (e.target.id === 'logout-btn') signOut(auth);
+    if (e.target.id === 'cancel-add-btn') addServiceModal.classList.remove('active');
+    if (e.target.id === 'cancel-edit-btn') editServiceModal.classList.remove('active');
+    
+    if (e.target.id === 'show-add-service-modal-btn') {
+        if (e.target.disabled) {
+            alert("Free plan users can only list one service. Please upgrade for more.");
+        } else {
+            addServiceModal.classList.add('active');
+        }
+    }
+
+    // --- Profile Card Buttons ---
+    if (e.target.id === 'edit-profile-btn') renderProfileCard(currentUserData, true);
+    if (e.target.id === 'cancel-profile-edit-btn') renderProfileCard(currentUserData, false);
+
+    // --- Service List Buttons ---
     const actionButton = e.target.closest('.action-btn');
     if (actionButton) {
         const serviceId = actionButton.dataset.id;
         if (actionButton.classList.contains('delete')) {
-            if (confirm("Are you sure you want to delete this service permanently?")) { 
-                await deleteDoc(doc(db, "services", serviceId)); 
-                loadDashboard(); 
-            }
+            if (confirm("Are you sure?")) { await deleteDoc(doc(db, "services", serviceId)); loadDashboard(); }
         } else if (actionButton.classList.contains('edit')) {
             const serviceSnap = await getDoc(doc(db, "services", serviceId));
             if (serviceSnap.exists()) {
@@ -146,58 +160,12 @@ dashboardContainer.addEventListener('click', async (e) => {
             }
         }
     }
-
-    // --- Show/Hide Profile Form Logic ---
-    if (e.target.id === 'edit-profile-btn') {
-        renderProfileCard(currentUserData, true);
-    }
-    if (e.target.id === 'cancel-profile-edit-btn') {
-        renderProfileCard(currentUserData, false);
-    }
-    if (e.target.id === 'logout-btn') {
-        signOut(auth);
-    }
-    if (e.target.id === 'show-add-service-modal-btn') {
-        if (e.target.disabled) {
-            alert("Free plan users can only list one service. Please upgrade for more.");
-        } else {
-            addServiceModal.classList.add('active');
-        }
-    }
-    
-    // --- Update Profile Form Submission ---
-    if (e.target.closest('#update-profile-form')) {
-        const form = e.target.closest('#update-profile-form');
-        form.addEventListener('submit', async (submitEvent) => {
-            submitEvent.preventDefault();
-            const submitButton = submitEvent.target.querySelector('button[type="submit"]');
-            submitButton.disabled = true; submitButton.classList.add('loading');
-            try {
-                const dataToUpdate = { 
-                    name: document.getElementById('profile-name').value, 
-                    bio: document.getElementById('profile-bio').value 
-                };
-                const photoFile = document.getElementById('profile-photo-file').files[0];
-                if (photoFile) {
-                    dataToUpdate.profilePhotoUrl = await uploadImageToCloudinary(photoFile);
-                }
-                await updateDoc(doc(db, "users", currentUser.uid), dataToUpdate);
-                loadDashboard();
-            } catch (error) {
-                alert("Could not update profile.");
-                submitButton.disabled = false; submitButton.classList.remove('loading');
-            }
-        }, { once: true }); // Use {once: true} to prevent multiple submissions
-    }
 });
 
-// --- Listeners for Modals and Forms (that are not in the dashboard container) ---
-document.getElementById('cancel-add-btn').addEventListener('click', () => addServiceModal.classList.remove('active'));
-document.getElementById('cancel-edit-btn').addEventListener('click', () => editServiceModal.classList.remove('active'));
-
+// --- Listeners for Form Submissions ---
 document.getElementById('add-service-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const submitButton = e.target.querySelector('button');
+    const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true; submitButton.classList.add('loading');
     try {
         const imageFile = document.getElementById('service-image-file').files[0];
@@ -211,21 +179,15 @@ document.getElementById('add-service-form').addEventListener('submit', async (e)
             imageUrl, providerId: currentUser.uid, providerName: currentUserData.name,
             createdAt: serverTimestamp(), isFeatured: false
         });
-        e.target.reset(); 
-        addServiceModal.classList.remove('active'); 
-        loadDashboard();
-    } catch(error) { 
-        alert(error.message); 
-    } finally { 
-        submitButton.disabled = false; 
-        submitButton.classList.remove('loading'); 
-    }
+        e.target.reset(); addServiceModal.classList.remove('active'); loadDashboard();
+    } catch(error) { alert(error.message); } 
+    finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
 });
 
 document.getElementById('edit-service-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const serviceId = document.getElementById('edit-service-id').value;
-    const submitButton = document.getElementById('update-service-btn');
+    const submitButton = e.target.querySelector('#update-service-btn');
     submitButton.disabled = true; submitButton.classList.add('loading');
     try {
         const dataToUpdate = {
@@ -235,16 +197,27 @@ document.getElementById('edit-service-form').addEventListener('submit', async (e
             description: document.getElementById('edit-service-desc').value,
         };
         const imageFile = document.getElementById('edit-service-image').files[0];
-        if (imageFile) {
-            dataToUpdate.imageUrl = await uploadImageToCloudinary(imageFile);
-        }
+        if (imageFile) dataToUpdate.imageUrl = await uploadImageToCloudinary(imageFile);
         await updateDoc(doc(db, "services", serviceId), dataToUpdate);
-        editServiceModal.classList.remove('active');
-        loadDashboard();
-    } catch (error) { 
-        alert("Failed to update service."); 
-    } finally { 
-        submitButton.disabled = false; 
-        submitButton.classList.remove('loading'); 
+        editServiceModal.classList.remove('active'); loadDashboard();
+    } catch (error) { alert("Failed to update service."); } 
+    finally { submitButton.disabled = false; submitButton.classList.remove('loading'); }
+});
+
+document.addEventListener('submit', async (e) => {
+    if (e.target.id === 'update-profile-form') {
+        e.preventDefault();
+        const submitButton = e.target.querySelector('button[type="submit"]');
+        submitButton.disabled = true; submitButton.classList.add('loading');
+        try {
+            const dataToUpdate = { name: document.getElementById('profile-name').value, bio: document.getElementById('profile-bio').value };
+            const photoFile = document.getElementById('profile-photo-file').files[0];
+            if (photoFile) dataToUpdate.profilePhotoUrl = await uploadImageToCloudinary(photoFile);
+            await updateDoc(doc(db, "users", currentUser.uid), dataToUpdate);
+            loadDashboard();
+        } catch (error) {
+            alert("Could not update profile.");
+            submitButton.disabled = false; submitButton.classList.remove('loading');
+        }
     }
 });
