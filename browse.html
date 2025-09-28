@@ -7,27 +7,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- === EMBEDDED CSS TO FIX THE 2-COLUMN LAYOUT - AS REQUESTED === -->
+    <!-- === EMBEDDED CSS FOR THIS PAGE - AS REQUESTED === -->
     <style>
-        .services-grid {
+        .browse-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://placehold.co/1200x400/34495e/ffffff?text=Kabale+Services') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            border-radius: var(--border-radius);
+        }
+        .cta-cards-section {
             display: grid;
-            /* --- THIS IS THE CRITICAL FIX --- */
-            /* It creates 2 columns and adds a gap between them */
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 3rem 0;
         }
-
-        /* For larger tablet and desktop screens, we can add more columns */
         @media (min-width: 768px) {
-            .services-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1.5rem;
+            .cta-cards-section {
+                grid-template-columns: 1fr 1fr;
             }
         }
-        @media (min-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        .cta-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .request-cta-section {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 3rem 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+        }
+        .requests-banner {
+            position: sticky;
+            top: 55px; /* Height of the header */
+            z-index: 999;
+            background-color: var(--primary-dark, #0056b3);
+            color: white;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .requests-banner-inner {
+            display: inline-block;
+            /* Animation speed: 30s for a full loop */
+            animation: scroll-banner 30s linear infinite;
+        }
+        .requests-banner-inner a {
+            color: white;
+            text-decoration: none;
+            padding: 0 2rem;
+        }
+        .requests-banner-inner a:hover {
+            text-decoration: underline;
+        }
+        @keyframes scroll-banner {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
         }
     </style>
 </head>
@@ -57,11 +97,39 @@
         </div>
     </nav>
 
+    <div id="requests-banner" class="requests-banner" style="display: none;">
+        <div id="requests-banner-inner" class="requests-banner-inner"></div>
+    </div>
+
     <main class="page-container container">
-        <h1 style="text-align: center;">Explore All Services</h1>
+        <section class="browse-hero">
+            <h1>Find Any Service, On Demand</h1>
+            <p>From plumbing to tutoring, connect with trusted local professionals right here in Kabale.</p>
+        </section>
+
+        <section class="cta-cards-section">
+            <div class="cta-card">
+                <h3>Looking for Products?</h3>
+                <p>Buy & sell electronics, clothing, and more on our main marketplace.</p>
+                <a href="https://www.kabaleonline.com/" class="cta-button message-btn" style="width: auto; padding: 10px 20px;">Visit Main Market</a>
+            </div>
+            <div class="cta-card">
+                <h3>Need a Place to Stay?</h3>
+                <p>Discover hostels and rentals available right now across Kabale.</p>
+                <a href="https://www.kabaleonline.com/rentals/" class="cta-button profile-btn" style="width: auto; padding: 10px 20px;">Find Rentals</a>
+            </div>
+        </section>
+
+        <h1 style="text-align: center;">All Available Services</h1>
         <div id="services-grid" class="services-grid">
             <div class="loading-spinner"><div class="spinner"></div></div>
         </div>
+
+        <section class="request-cta-section">
+            <h2>Can't Find The Service You Need?</h2>
+            <p class="text-light" style="max-width: 500px; margin: 0 auto 1.5rem;">Let our community of providers know what you're looking for.</p>
+            <a href="requests.html" class="cta-button message-btn" style="width: auto; padding: 12px 25px;">Post a Request</a>
+        </section>
     </main>
 
     <footer>
