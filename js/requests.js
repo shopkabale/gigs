@@ -25,27 +25,12 @@ async function loadRequests() {
         }
 
         const allRequests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        // --- THIS IS THE FIX: HIDE OLD REQUESTS IN THE BROWSER ---
-        // 1. Calculate the date from 7 days ago.
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-        // 2. Filter the requests to only include ones created within the last 7 days.
-        const recentRequests = allRequests.filter(req => {
-            return req.createdAt && req.createdAt.toDate() > sevenDaysAgo;
-        });
         
-        // 3. Sort the recent requests by date.
-        recentRequests.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+        // Sort the requests by date in the browser.
+        allRequests.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
 
-        if (recentRequests.length === 0) {
-            requestsList.innerHTML = '<p class="text-light" style="text-align: center; padding: 2rem;">There are no recent service requests.</p>';
-            return;
-        }
-
-        requestsList.innerHTML = recentRequests.map(req => {
-            const date = new Date(req.createdAt.toMillis()).toLocaleDateString();
+        requestsList.innerHTML = allRequests.map(req => {
+            const date = req.createdAt ? new Date(req.createdAt.toMillis()).toLocaleDateString() : 'Just now';
             return `
                 <div class="service-list-item" style="display: block; padding: 1.5rem;">
                     <p style="font-weight: bold; font-size: 1.2rem; margin: 0 0 0.5rem;">${req.title}</p>
@@ -57,7 +42,7 @@ async function loadRequests() {
 
     } catch (error) {
         console.error("Error loading requests:", error);
-        requestsList.innerHTML = '<p style="color: red; text-align: center;">Could not load service requests.</p>';
+        requestsList.innerHTML = '<p style="color: red; text-align: center;">Could not load service requests. Please check your security rules.</p>';
     }
 }
 
@@ -73,7 +58,6 @@ requestForm.addEventListener('submit', async (e) => {
     submitButton.classList.add('loading');
 
     try {
-        // We no longer need the 'expiresAt' field. We just save the request.
         await addDoc(collection(db, "serviceRequests"), {
             title,
             description,
@@ -87,7 +71,7 @@ requestForm.addEventListener('submit', async (e) => {
         loadRequests(); // Refresh the list
     } catch (error) {
         console.error("Error submitting request:", error);
-        messageEl.textContent = 'Failed to submit request.';
+        messageEl.textContent = 'Failed to submit request. Please check your security rules.';
         messageEl.style.color = 'red';
     } finally {
         submitButton.disabled = false;
