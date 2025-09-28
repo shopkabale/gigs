@@ -7,18 +7,68 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     
+    <!-- === EMBEDDED CSS FOR DASHBOARD - AS REQUESTED === -->
     <style>
-        .dashboard-hero { background: linear-gradient(135deg, var(--primary-color), #0056b3); color: white; padding: 2.5rem 2rem; border-radius: var(--border-radius); margin-bottom: 2rem; box-shadow: var(--shadow-lg); }
+        .dashboard-hero {
+            background: linear-gradient(135deg, var(--primary-color), #0056b3);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
         .dashboard-hero h1 { margin: 0; font-size: 2rem; }
         .dashboard-hero p { margin: 0.5rem 0 1.5rem; opacity: 0.9; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 992px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
-        .dashboard-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); }
-        .dashboard-card h2 { font-size: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--primary-color); margin-bottom: 1.5rem; }
-        .service-list-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background-color: var(--bg-color); border-radius: 8px; margin-bottom: 1rem; }
-        .service-list-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-        .service-list-item-info { flex-grow: 1; overflow: hidden; }
-        .service-list-item-info p { margin: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: single column */
+            gap: 2rem;
+        }
+        @media (min-width: 992px) {
+            .dashboard-grid {
+                /* Desktop: two columns, prevents overflow */
+                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); 
+            }
+        }
+        .dashboard-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .dashboard-card h2 {
+            font-size: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .service-list-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .service-list-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .service-list-item-info {
+            flex-grow: 1;
+            min-width: 0; /* CRITICAL FIX for the "zoom" bug */
+        }
+        .service-list-item-info p {
+            margin: 0;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .service-list-item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
         .action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 0.5rem; color: var(--text-light); transition: all 0.2s ease; }
         .action-btn.edit:hover { color: var(--primary-color); transform: scale(1.2); }
@@ -29,7 +79,7 @@
         .account-card-item span.plan { font-weight: bold; text-transform: capitalize; color: var(--primary-color); }
         #logout-btn { margin-top: 1rem; border: 2px solid var(--error-color); color: var(--error-color); background-color: transparent; }
         #logout-btn:hover { background-color: var(--error-color); color: white; }
-        #edit-profile-form { display: none; }
+        #edit-profile-form { display: none; /* Hidden by default */ }
     </style>
 </head>
 <body>
@@ -115,10 +165,7 @@
             <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
         </div>
     </footer>
-    
-    <!-- === THIS IS THE CRITICAL FIX: It now correctly loads dashboard.js === -->
     <script type="module" src="js/dashboard.js"></script>
-    
     <script>
         document.querySelector('.hamburger-menu').addEventListener('click', () => {
             document.querySelector('.mobile-nav').classList.toggle('active');
