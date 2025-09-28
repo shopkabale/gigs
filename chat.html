@@ -18,6 +18,14 @@
         .chat-form { display: flex; gap: 10px; padding: 1rem; border-top: 1px solid var(--border-color); }
         .chat-form textarea { flex-grow: 1; resize: none; padding: 12px 18px; border-radius: 25px; border: 2px solid var(--border-color); min-height: 50px; box-sizing: border-box; }
         .chat-form button { flex-shrink: 0; border-radius: 25px; padding: 0 25px; }
+/* === FINAL FIX FOR SEND BUTTON --- */
+        .chat-form button {
+            padding: 0; /* Remove padding */
+            width: 50px; /* Set a fixed width */
+            height: 50px; /* Set a fixed height to match */
+            border-radius: 50%; /* Make it circular */
+            font-size: 1.2rem; /* Make the icon a nice size */
+        }
     </style>
 </head>
 <body>
