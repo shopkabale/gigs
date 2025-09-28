@@ -6,7 +6,7 @@ const chatContent = document.getElementById('chat-content');
 let currentUser = null;
 let unsubscribeMessages = null; // To prevent duplicate listeners
 const urlParams = new URLSearchParams(window.location.search);
-const chatId = urlParams.get('chatId');
+let chatId = urlParams.get('chatId'); // May be null for new chats
 const recipientId = urlParams.get('recipientId');
 
 onAuthStateChanged(auth, user => {
@@ -20,8 +20,15 @@ onAuthStateChanged(auth, user => {
 
 async function initializeChat() {
     if (!recipientId) {
-        chatContent.innerHTML = '<h1>Error</h1><p>Recipient not found.</p>';
+        chatContent.innerHTML = '<h1>Error</h1><p>Recipient not found. The link may be broken.</p>';
         return;
+    }
+
+    // --- THIS IS THE CRITICAL FIX ---
+    // If no chatId is provided in the URL, we create a consistent one.
+    // By sorting the two user IDs, the ID will always be the same regardless of who starts the chat.
+    if (!chatId) {
+        chatId = [currentUser.uid, recipientId].sort().join('_');
     }
 
     try {
@@ -29,14 +36,16 @@ async function initializeChat() {
         const recipientName = userDoc.exists() ? userDoc.data().name : "User";
         
         renderChatShell(recipientName);
-        setupMessageListener();
-
+        
+        // Ensure the chat document exists before trying to read messages from it.
         const chatRef = doc(db, 'chats', chatId);
         await setDoc(chatRef, { users: [currentUser.uid, recipientId] }, { merge: true });
 
+        setupMessageListener();
+
     } catch (error) {
         console.error("Error initializing chat:", error);
-        chatContent.innerHTML = '<h1>Error</h1><p>Could not load chat.</p>';
+        chatContent.innerHTML = '<h1>Error</h1><p>Could not load chat. Please try again.</p>';
     }
 }
 
@@ -69,14 +78,18 @@ function setupMessageListener() {
         const messagesContainer = document.getElementById('chat-messages');
         if (!messagesContainer) return;
         
-        messagesContainer.innerHTML = '';
-        snapshot.forEach(docSnap => {
-            const messageData = docSnap.data();
-            const div = document.createElement('div');
-            div.classList.add('message', messageData.senderId === currentUser.uid ? 'sent' : 'received');
-            div.textContent = messageData.text || '';
-            messagesContainer.appendChild(div);
-        });
+        if (snapshot.empty) {
+            messagesContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 1rem;">No messages yet. Say hello!</p>';
+        } else {
+            messagesContainer.innerHTML = '';
+            snapshot.forEach(docSnap => {
+                const messageData = docSnap.data();
+                const div = document.createElement('div');
+                div.classList.add('message', messageData.senderId === currentUser.uid ? 'sent' : 'received');
+                div.textContent = messageData.text || '';
+                messagesContainer.appendChild(div);
+            });
+        }
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     });
 }
