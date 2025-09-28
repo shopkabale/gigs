@@ -33,9 +33,7 @@
             console.log(message);
             const p = document.createElement('p');
             p.textContent = message;
-            if (isError) {
-                p.style.color = '#e53e3e';
-            }
+            if (isError) p.style.color = '#e53e3e';
             logOutput.appendChild(p);
             logOutput.scrollTop = logOutput.scrollHeight;
         }
@@ -50,43 +48,48 @@
                 const productsRef = collection(db, "products");
                 const servicesRef = collection(db, "services");
 
-                // 1. Find all documents in 'products' that are services
                 const q = query(productsRef, where("listing_type", "==", "service"));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
                     log('No services found in the "products" collection. Nothing to migrate.');
+                    startBtn.textContent = 'Migration Finished';
                     return;
                 }
 
                 log(`Found ${querySnapshot.size} services to migrate.`);
                 let successCount = 0;
 
-                // 2. Loop through each old service and create a new one
                 for (const doc of querySnapshot.docs) {
                     const oldData = doc.data();
-                    log(`Migrating: ${oldData.name}...`);
+                    log(`Migrating: ${oldData.name || 'Untitled Product'}...`);
                     
-                    // 3. Create the new service object with updated field names
+                    // --- THIS IS THE FINAL FIX ---
+                    // It checks for missing data and provides safe default values
+                    // instead of crashing with an "undefined" error.
+                    if (!oldData.sellerId || !oldData.sellerName) {
+                        log(`  -> SKIPPING: Missing sellerId or sellerName.`, true);
+                        continue; // Skip this document and move to the next one
+                    }
+
                     const newServiceData = {
-                        title: oldData.name || "No Title",
-                        description: oldData.description || "",
-                        price: oldData.price || 0, // Add a default price
-                        whatsapp: oldData.whatsapp || "", // Add a default whatsapp
+                        title: oldData.name || "Untitled Service",
+                        description: oldData.description || "No description provided.",
+                        price: oldData.price || 0,
+                        whatsapp: oldData.whatsapp || "",
                         imageUrl: oldData.imageUrls && oldData.imageUrls.length > 0 ? oldData.imageUrls[0] : "",
-                        providerId: oldData.sellerId, // Map sellerId to providerId
-                        providerName: oldData.sellerName, // Map sellerName to providerName
+                        providerId: oldData.sellerId,
+                        providerName: oldData.sellerName,
                         createdAt: oldData.createdAt || serverTimestamp(),
-                        isFeatured: false // Set default for the new field
+                        isFeatured: false
                     };
 
-                    // 4. Add the new document to the 'services' collection
                     await addDoc(servicesRef, newServiceData);
                     successCount++;
-                    log(`  -> Successfully copied "${oldData.name}" to the services collection.`);
+                    log(`  -> Successfully copied "${newServiceData.title}" to the services collection.`);
                 }
 
-                log(`\nMigration Complete! Successfully migrated ${successCount} services.`, false);
+                log(`\nMigration Complete! Successfully migrated ${successCount} of ${querySnapshot.size} services.`, false);
                 startBtn.textContent = 'Migration Finished';
 
             } catch (error) {
