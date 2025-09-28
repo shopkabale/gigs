@@ -158,7 +158,15 @@
       max-width: 95vw;
       width: 100%;
     }
-
+/* === FINAL FIX FOR BUTTON OVERLAP & SPACING === */
+        .dashboard-card .btn {
+            display: block; /* Forces each button onto its own line */
+            width: 100%;    /* Ensures they fill the container width */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+        }
+        .dashboard-card a.btn {
+            margin-bottom: 1rem; /* Adds spacing between the two buttons */
+        }
     
     </style>
 </head>
