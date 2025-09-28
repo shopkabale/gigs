@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Service - Kabale Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="mobile-nav-overlay"></div>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Services Menu</div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+        </div>
+        <div class="mobile-nav-footer">
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
+        </div>
+    </nav>
+
+    <main class="page-container container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1>Request a Service</h1>
+            <p class="text-light" style="max-width: 600px; margin: 0 auto;">Can't find what you're looking for? Post a request and let skilled providers find you.</p>
+        </div>
+
+        <div class="dashboard-card" style="margin-bottom: 3rem;">
+            <h2>Post a New Request</h2>
+            <form id="request-service-form">
+                <div class="form-group">
+                    <label for="request-title">What service do you need?</label>
+                    <input type="text" id="request-title" placeholder="e.g., I need a plumber to fix a leak" required>
+                </div>
+                <div class="form-group">
+                    <label for="request-description">Provide more details</label>
+                    <textarea id="request-description" placeholder="Describe the task, your location, and when you need it done." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Request</button>
+                <p id="request-form-message" style="margin-top: 1rem; text-align: center;"></p>
+            </form>
+        </div>
+
+        <div>
+            <h2>Current Requests</h2>
+            <div id="requests-list">
+                <div class="loading-spinner"><div class="spinner"></div></div>
+            </div>
+        </div>
+    </main>
+
+        <footer>
+        <div class="container">
+            <div class="footer-logo">Kabale <span>Online</span></div>
+            <p class="footer-tagline">Your Community Marketplace</p>
+            <div class="footer-socials">
+                <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://twitter.com/kabaleonline" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kabaleonline" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.kabaleonline.com/about.html">About</a>
+                <a href="https://www.kabaleonline.com/blog/">Blog</a>
+                <a href="https://www.kabaleonline.com/terms.html">Terms</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Kabale Online. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/home.js"></script>
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
