@@ -1,6 +1,6 @@
 import { db, auth } from './firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { collection, addDoc, serverTimestamp, query, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { collection, addDoc, serverTimestamp, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const requestForm = document.getElementById('request-service-form');
 const requestsList = document.getElementById('requests-list');
@@ -16,8 +16,6 @@ onAuthStateChanged(auth, user => {
 
 async function loadRequests() {
     try {
-        // --- THIS IS THE FIX: A simple query that will not fail ---
-        // 1. Fetch ALL service requests without any complex sorting.
         const q = query(collection(db, "serviceRequests"));
         const querySnapshot = await getDocs(q);
 
@@ -26,13 +24,28 @@ async function loadRequests() {
             return;
         }
 
-        const requests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        // 2. Sort the requests by date IN THE BROWSER.
-        requests.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+        const allRequests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        requestsList.innerHTML = requests.map(req => {
-            const date = req.createdAt ? new Date(req.createdAt.toMillis()).toLocaleDateString() : 'Just now';
+        // --- THIS IS THE FIX: HIDE OLD REQUESTS IN THE BROWSER ---
+        // 1. Calculate the date from 7 days ago.
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        // 2. Filter the requests to only include ones created within the last 7 days.
+        const recentRequests = allRequests.filter(req => {
+            return req.createdAt && req.createdAt.toDate() > sevenDaysAgo;
+        });
+        
+        // 3. Sort the recent requests by date.
+        recentRequests.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+
+        if (recentRequests.length === 0) {
+            requestsList.innerHTML = '<p class="text-light" style="text-align: center; padding: 2rem;">There are no recent service requests.</p>';
+            return;
+        }
+
+        requestsList.innerHTML = recentRequests.map(req => {
+            const date = new Date(req.createdAt.toMillis()).toLocaleDateString();
             return `
                 <div class="service-list-item" style="display: block; padding: 1.5rem;">
                     <p style="font-weight: bold; font-size: 1.2rem; margin: 0 0 0.5rem;">${req.title}</p>
@@ -59,19 +72,14 @@ requestForm.addEventListener('submit', async (e) => {
     submitButton.disabled = true;
     submitButton.classList.add('loading');
 
-    // --- NEW: Calculate the expiration date (7 days from now) ---
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + 7);
-
     try {
+        // We no longer need the 'expiresAt' field. We just save the request.
         await addDoc(collection(db, "serviceRequests"), {
             title,
             description,
             requesterId: currentUser.uid,
             requesterName: auth.currentUser.displayName || 'Anonymous',
-            createdAt: serverTimestamp(),
-            // --- NEW: Add the expiration timestamp to the document ---
-            expiresAt: Timestamp.fromDate(expirationDate)
+            createdAt: serverTimestamp()
         });
         messageEl.textContent = 'Your request has been posted!';
         messageEl.style.color = 'green';
