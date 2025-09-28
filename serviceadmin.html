@@ -16,7 +16,7 @@
         }
         @media (min-width: 1024px) {
             .admin-grid {
-                grid-template-columns: 1fr 1fr; /* Desktop: two columns */
+                grid-template-columns: 1fr 1fr; /* Desktop: two equal columns */
             }
         }
         .admin-card {
@@ -41,6 +41,7 @@
         .admin-table th, .admin-table td {
             padding: 0.75rem;
             border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
         }
         .admin-table th {
             font-weight: 700;
@@ -51,12 +52,46 @@
             border: 1px solid var(--border-color);
             background-color: var(--bg-color);
         }
+        .action-btn.delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+        }
+        .action-btn.delete:hover {
+            color: var(--error-color);
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
     <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header"><!-- Your Unified Header --></header>
-    <nav class="mobile-nav"><!-- Your Unified Mobile Nav --></nav>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Services Menu</div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+        </div>
+        <div class="mobile-nav-footer">
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
+        </div>
+    </nav>
 
     <main class="page-container container" id="admin-container">
         <h1>Admin Panel</h1>
