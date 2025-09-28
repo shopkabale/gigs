@@ -4,90 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Kabale Online</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- === EMBEDDED CSS FOR ATTRACTIVE LAYOUT === -->
     <style>
-        .auth-container {
-            display: grid;
-            grid-template-columns: 1fr; /* Single column on mobile */
-            min-height: calc(100vh - 55px); /* Full height minus header */
-            margin-top: 55px;
-        }
-        @media (min-width: 992px) {
-            .auth-container {
-                grid-template-columns: 1fr 1fr; /* Two columns on desktop */
-            }
-        }
-        .auth-panel-brand {
-            background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 86, 179, 0.9)), url('https://placehold.co/800x1200/34495e/ffffff?text=K.O') no-repeat center center;
-            background-size: cover;
-            color: white;
-            display: none; /* Hidden on mobile */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-        @media (min-width: 992px) {
-            .auth-panel-brand {
-                display: flex; /* Shown on desktop */
-            }
-        }
-        .auth-panel-brand h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .auth-panel-brand p {
-            font-size: 1.25rem;
-            max-width: 400px;
-            opacity: 0.9;
-        }
-        .auth-panel-form {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background-color: var(--bg-color);
-        }
-        .auth-form-card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            padding: 2.5rem 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-        }
+        .auth-container { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+        @media (min-width: 992px) { .auth-container { grid-template-columns: 1fr 1fr; } }
+        .auth-panel-brand { background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 86, 179, 0.9)), url('https://placehold.co/800x1200/34495e/ffffff?text=K.O') no-repeat center center; background-size: cover; color: white; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; }
+        @media (min-width: 992px) { .auth-panel-brand { display: flex; } }
+        .auth-panel-brand h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .auth-panel-brand p { font-size: 1.25rem; max-width: 400px; opacity: 0.9; }
+        .auth-panel-form { display: flex; align-items: center; justify-content: center; padding: 2rem; background-color: var(--bg-color); }
+        .auth-form-card { width: 100%; max-width: 420px; background: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); }
+        .success-message { color: var(--success-color, #28a745); text-align: center; margin-bottom: 1rem; font-weight: bold; }
+        .error-message { color: var(--error-color, #dc3545); text-align: center; margin-bottom: 1rem; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header">
-        <div class="header-top-bar">
-            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
-            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
-            <div class="header-spacer"></div>
-            <div class="header-icons">
-                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
-                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
-            </div>
-        </div>
-    </header>
-    <nav class="mobile-nav">
-        <div class="mobile-nav-header">Services Menu</div>
-        <div class="mobile-nav-links">
-            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
-            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
-            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
-            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
-        </div>
-        <div class="mobile-nav-footer">
-             <a href="index.html" class="post-button">Back to Home</a>
-        </div>
-    </nav>
-
     <div class="auth-container">
         <div class="auth-panel-brand">
             <h1>Join Today</h1>
@@ -96,6 +27,7 @@
         <div class="auth-panel-form">
             <div class="auth-form-card">
                  <div style="text-align: center; margin-bottom: 2rem;">
+                    <a href="index.html" class="site-title">Kabale <span>Online</span></a>
                     <h2 style="font-size: 1.75rem;">Create Your Account</h2>
                 </div>
                 <form id="signup-form">
@@ -111,7 +43,8 @@
                         <label for="signup-password">Password</label>
                         <input type="password" id="signup-password" placeholder="At least 6 characters" required>
                     </div>
-                    <p id="error-message" style="color: red; text-align: center; margin-bottom: 1rem; display: none;"></p>
+                    <p id="success-message" style="display: none;"></p>
+                    <p id="error-message" style="display: none;"></p>
                     <button type="submit" id="signup-btn" class="btn btn-primary">Create Account</button>
                 </form>
                 <p style="text-align: center; color: var(--text-light); margin-top: 1.5rem;">Already have an account? <a href="login.html" style="font-weight: bold;">Login</a></p>
@@ -120,15 +53,5 @@
     </div>
     
     <script type="module" src="js/auth.js"></script>
-    <script>
-        document.querySelector('.hamburger-menu').addEventListener('click', () => {
-            document.querySelector('.mobile-nav').classList.toggle('active');
-            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
-        });
-        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
-            document.querySelector('.mobile-nav').classList.remove('active');
-            document.querySelector('.mobile-nav-overlay').classList.remove('active');
-        });
-    </script>
 </body>
 </html>
