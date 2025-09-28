@@ -56,6 +56,7 @@ if (loginForm) {
         
         try {
             await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+            // onAuthStateChanged will handle redirect
         } catch (error) {
             showMessage(errorMessage, 'Invalid email or password.', true);
             loginBtn.disabled = false;
@@ -110,6 +111,7 @@ if (signupForm) {
 
             await sendEmailVerification(user);
             
+            // Show success message and clear form, onAuthStateChanged will redirect.
             showMessage(successMessage, "Success! Please check your email to verify your account.");
             signupForm.reset();
             
@@ -148,6 +150,6 @@ if (resendBtn) {
 
     logoutBtn.addEventListener('click', () => {
         signOut(auth);
-        window.location.href = 'login.html';
+        window.location.href = 'login.html'; // Redirect to login after logout
     });
 }
