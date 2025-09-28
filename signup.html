@@ -4,35 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Kabale Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- === EMBEDDED CSS FOR ATTRACTIVE LAYOUT === -->
+    <style>
+        .auth-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            min-height: calc(100vh - 55px); /* Full height minus header */
+            margin-top: 55px;
+        }
+        @media (min-width: 992px) {
+            .auth-container {
+                grid-template-columns: 1fr 1fr; /* Two columns on desktop */
+            }
+        }
+        .auth-panel-brand {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 86, 179, 0.9)), url('https://placehold.co/800x1200/34495e/ffffff?text=K.O') no-repeat center center;
+            background-size: cover;
+            color: white;
+            display: none; /* Hidden on mobile */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        @media (min-width: 992px) {
+            .auth-panel-brand {
+                display: flex; /* Shown on desktop */
+            }
+        }
+        .auth-panel-brand h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .auth-panel-brand p {
+            font-size: 1.25rem;
+            max-width: 400px;
+            opacity: 0.9;
+        }
+        .auth-panel-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: var(--bg-color);
+        }
+        .auth-form-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+        }
+    </style>
 </head>
-<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
-    <main style="width: 100%; max-width: 420px;" class="dashboard-card">
-        <div style="text-align: center; margin-bottom: 2rem;">
+<body>
+    <div class="mobile-nav-overlay"></div>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
             <a href="index.html" class="site-title">Kabale <span>Online</span></a>
-            <h1 style="font-size: 1.75rem; margin-top: 1rem;">Create Your Account</h1>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
         </div>
-        <form id="signup-form">
-            <div class="form-group">
-                <input type="text" id="signup-name" placeholder="Full Name" required>
-            </div>
-            <div class="form-group">
-                <input type="email" id="signup-email" placeholder="Email Address" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="signup-password" placeholder="Password (min. 6 characters)" required>
-            </div>
-            <p id="error-message" style="color: red; text-align: center; margin-bottom: 1rem; display: none;"></p>
-            <button type="submit" id="signup-btn" class="btn btn-primary">Create Account</button>
-        </form>
-        <p style="text-align: center; color: var(--text-light); margin-top: 1.5rem;">Already have an account? <a href="login.html" style="font-weight: bold;">Login</a></p>
-    </main>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Services Menu</div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fa-solid fa-home"></i> Home</a>
+            <a href="browse.html"><i class="fa-solid fa-search"></i> All Services</a>
+            <a href="dashboard.html"><i class="fa-solid fa-tachometer-alt"></i> My Dashboard</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+        </div>
+        <div class="mobile-nav-footer">
+             <a href="https://www.kabaleonline.com/" class="post-button">Back to Main Site</a>
+        </div>
+    </nav>
 
-    <!-- === NEW "BACK TO HOME" BUTTON ADDED HERE === -->
-    <div style="margin-top: 2rem; text-align: center;">
-        <a href="index.html" style="color: var(--text-light); text-decoration: none; font-weight: 600;">&larr; Back to Home Page</a>
+    <div class="auth-container">
+        <div class="auth-panel-brand">
+            <h1>Join Today</h1>
+            <p>Become a part of the fastest-growing professional network in Kigezi.</p>
+        </div>
+        <div class="auth-panel-form">
+            <div class="auth-form-card">
+                 <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="font-size: 1.75rem;">Create Your Account</h2>
+                </div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="At least 6 characters" required>
+                    </div>
+                    <p id="error-message" style="color: red; text-align: center; margin-bottom: 1rem; display: none;"></p>
+                    <button type="submit" id="signup-btn" class="btn btn-primary">Create Account</button>
+                </form>
+                <p style="text-align: center; color: var(--text-light); margin-top: 1.5rem;">Already have an account? <a href="login.html" style="font-weight: bold;">Login</a></p>
+            </div>
+        </div>
     </div>
-
+    
     <script type="module" src="js/auth.js"></script>
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        });
+        document.querySelector('.mobile-nav-overlay').addEventListener('click', () => {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-nav-overlay').classList.remove('active');
+        });
+    </script>
 </body>
 </html>
