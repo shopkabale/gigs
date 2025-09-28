@@ -33,10 +33,27 @@
     </style>
 </head>
 <body>
-    <div class="mobile-nav-overlay"></div>
-    <header class="sticky-header"><!-- Your Unified Header --></header>
-    <nav class="mobile-nav"><!-- Your Unified Mobile Nav --></nav>
-
+        <div class="mobile-nav-overlay"></div>
+    <header class="sticky-header">
+        <div class="header-top-bar">
+            <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            <a href="index.html" class="site-title">Kabale <span>Online</span></a>
+            <div class="header-spacer"></div>
+            <div class="header-icons">
+                <a href="inbox.html" aria-label="Inbox"><i class="fa-regular fa-envelope"></i></a>
+                <a href="dashboard.html" aria-label="Dashboard"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">Kabale Online</div>
+        <div class="mobile-nav-links">
+            <a href="https://www.kabaleonline.com/"><i class="fa-solid fa-store"></i> All Items</a>
+            <a href="browse.html"><i class="fa-solid fa-screwdriver-wrench"></i> Services</a>
+            <a href="https://www.kabaleonline.com/events/"><i class="fa-solid fa-calendar-days"></i> Events</a>
+            <a href="inbox.html"><i class="fa-solid fa-inbox"></i> My Inbox</a>
+            <a href="https://www.kabaleonline.com/rentals/"><i class="fa-solid fa-building"></i> Hostels & Rentals</a>
+        </div>
     <main class="page-container container" id="dashboard-container">
         <div class="loading-spinner"><div class="spinner"></div></div>
     </main>
