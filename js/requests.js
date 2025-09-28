@@ -1,6 +1,6 @@
 import { db, auth } from './firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { collection, addDoc, serverTimestamp, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { collection, addDoc, serverTimestamp, query, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const requestForm = document.getElementById('request-service-form');
 const requestsList = document.getElementById('requests-list');
@@ -16,14 +16,19 @@ onAuthStateChanged(auth, user => {
 
 async function loadRequests() {
     try {
+        // --- THIS IS THE FIX: A simple query that will not fail ---
+        // 1. Fetch ALL service requests without any complex sorting.
         const q = query(collection(db, "serviceRequests"));
         const querySnapshot = await getDocs(q);
+
         if (querySnapshot.empty) {
             requestsList.innerHTML = '<p class="text-light" style="text-align: center; padding: 2rem;">Be the first to request a service!</p>';
             return;
         }
 
         const requests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        // 2. Sort the requests by date IN THE BROWSER.
         requests.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
 
         requestsList.innerHTML = requests.map(req => {
@@ -54,13 +59,19 @@ requestForm.addEventListener('submit', async (e) => {
     submitButton.disabled = true;
     submitButton.classList.add('loading');
 
+    // --- NEW: Calculate the expiration date (7 days from now) ---
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+
     try {
         await addDoc(collection(db, "serviceRequests"), {
             title,
             description,
             requesterId: currentUser.uid,
             requesterName: auth.currentUser.displayName || 'Anonymous',
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+            // --- NEW: Add the expiration timestamp to the document ---
+            expiresAt: Timestamp.fromDate(expirationDate)
         });
         messageEl.textContent = 'Your request has been posted!';
         messageEl.style.color = 'green';
