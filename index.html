@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* HERO */
+        /* === PAGE BACKGROUND === */
+        body {
+            background: #f0f2f5;
+        }
+
+        /* === HERO === */
         .hero {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             background: linear-gradient(135deg, rgba(0,123,255,0.85), rgba(0,123,255,0.7)), url('https://www.kabaleonline.com/assets/services-hero.jpg') no-repeat center/cover;
             color: white;
             border-radius: 12px;
@@ -44,21 +49,56 @@
             transform: scale(1.05);
         }
 
-        /* INFO SECTIONS */
+        /* === FEATURED SERVICES === */
+        #featured-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+        .featured-card {
+            border-radius: 12px;
+            padding: 2rem;
+            color: #fff;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .featured-card:nth-child(1) { background: #007bff; }
+        .featured-card:nth-child(2) { background: #28a745; }
+        .featured-card:nth-child(3) { background: #ffc107; color:#000; }
+        .featured-card:nth-child(4) { background: #17a2b8; }
+        .featured-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        .featured-card p {
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        /* === INFO SECTIONS === */
         .info-section {
             text-align: center;
-            padding: 3rem 1.5rem;
+            padding: 4rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease;
         }
         .info-section h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: #fff;
         }
         .info-section p {
             max-width: 700px;
             margin: 0 auto 2rem;
-            color: var(--text-dark);
             line-height: 1.6;
+            color: #f0f2f5;
         }
         .info-grid {
             display: grid;
@@ -66,28 +106,31 @@
             gap: 1.5rem;
         }
         .info-card {
-            background-color: #fff;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transition: transform 0.3s;
+            color: #fff;
+            text-align: center;
         }
         .info-card:hover {
             transform: translateY(-5px);
         }
         .info-card i {
             font-size: 2rem;
-            color: var(--primary-color);
             margin-bottom: 1rem;
         }
         .info-card h3 {
             margin-bottom: 0.5rem;
         }
         .info-card p {
-            color: var(--text-light);
+            font-weight: 400;
         }
 
-        /* ANIMATIONS */
+        /* Distinct backgrounds for sections */
+        .what-we-do { background: #6c757d; }
+        .why-choose-us { background: #343a40; }
+
+        /* === ANIMATIONS === */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -133,63 +176,47 @@
             </div>
         </section>
 
-        <!-- WHAT WE DO -->
-        <section class="info-section">
-            <h2>What Kabale Online Offers</h2>
-            <p>We provide a platform for Kabale residents to easily access and offer professional services. From home repairs to personal tutoring, you can find trusted service providers quickly.</p>
-
-<!-- FEATURED SERVICES -->
-        <section class="info-section">
-            <h2>Featured Services</h2>
-            <div id="featured-services">
-                <div class="loading-spinner"><div class="spinner"></div></div>
+        <!-- FEATURED SERVICES -->
+        <section id="featured-services" class="info-section" style="background:#e9ecef; color:#000;">
+            <div class="featured-card">
+                <h3>Plumbing & Repairs</h3>
+                <p>Fast, reliable home repair services by trusted professionals in Kabale.</p>
+            </div>
+            <div class="featured-card">
+                <h3>Education & Tutoring</h3>
+                <p>Personal tutors and trainers for academic and skill development.</p>
+            </div>
+            <div class="featured-card">
+                <h3>Events & Entertainment</h3>
+                <p>Hire photographers, DJs, caterers, and more for your events.</p>
+            </div>
+            <div class="featured-card">
+                <h3>Health & Wellness</h3>
+                <p>Connect with local health professionals and wellness experts.</p>
             </div>
         </section>
 
-
+        <!-- WHAT WE DO -->
+        <section class="info-section what-we-do">
+            <h2>What Kabale Online Offers</h2>
+            <p>We provide a platform for Kabale residents to easily access and offer professional services. From home repairs to personal tutoring, find trusted service providers quickly and securely.</p>
             <div class="info-grid">
-                <div class="info-card">
-                    <i class="fa-solid fa-wrench"></i>
-                    <h3>Home & Repair Services</h3>
-                    <p>Connect with professionals for plumbing, electrical, carpentry, and other repairs.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                    <h3>Education & Tutoring</h3>
-                    <p>Hire tutors, trainers, and experts for academic and skill development.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-people-group"></i>
-                    <h3>Events & Personal Services</h3>
-                    <p>Book photographers, DJs, caterers, and other personal service providers.</p>
-                </div>
+                <div class="info-card" style="background:#007bff;"><i class="fa-solid fa-wrench"></i><h3>Home & Repair</h3><p>Plumbing, electrical, carpentry, and more.</p></div>
+                <div class="info-card" style="background:#28a745;"><i class="fa-solid fa-chalkboard-user"></i><h3>Education & Tutoring</h3><p>Hire tutors, trainers, and skill experts.</p></div>
+                <div class="info-card" style="background:#ffc107; color:#000;"><i class="fa-solid fa-people-group"></i><h3>Events & Personal</h3><p>Photographers, DJs, catering, and personal services.</p></div>
             </div>
         </section>
 
         <!-- WHY CHOOSE US -->
-        <section class="info-section" style="background:#f4f7f6; border-radius:12px;">
+        <section class="info-section why-choose-us">
             <h2>Why Choose Kabale Online?</h2>
-            <p>Our platform is designed for simplicity, safety, and growth of Kabale’s local service community.</p>
+            <p>Our platform is simple, safe, and community-focused, supporting local businesses while connecting neighbors efficiently.</p>
             <div class="info-grid">
-                <div class="info-card">
-                    <i class="fa-solid fa-bolt"></i>
-                    <h3>Fast & Easy</h3>
-                    <p>Post or find services in under 2 minutes with no approval delays.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-lock"></i>
-                    <h3>Safe & Private</h3>
-                    <p>All interactions are secure and buyers contact providers directly.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-handshake"></i>
-                    <h3>Community-Focused</h3>
-                    <p>We support local businesses and professionals while connecting neighbors.</p>
-                </div>
+                <div class="info-card" style="background:#17a2b8;"><i class="fa-solid fa-bolt"></i><h3>Fast & Easy</h3><p>Post or find services in under 2 minutes.</p></div>
+                <div class="info-card" style="background:#6f42c1;"><i class="fa-solid fa-lock"></i><h3>Safe & Private</h3><p>All interactions are secure and direct.</p></div>
+                <div class="info-card" style="background:#fd7e14;"><i class="fa-solid fa-handshake"></i><h3>Community-Focused</h3><p>Support local professionals and businesses.</p></div>
             </div>
         </section>
-
-        
 
     </main>
 
