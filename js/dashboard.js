@@ -10,8 +10,8 @@ let currentUser = null;
 let currentUserData = null; // To store user data globally within this module
 
 async function uploadImageToCloudinary(file) {
-    const CLOUD_NAME = "YOUR_NEW_CLOUD_NAME";
-    const UPLOAD_PRESET = "YOUR_NEW_UNSIGNED_PRESET_NAME";
+    const CLOUD_NAME = "dodtknwvv";
+    const UPLOAD_PRESET = "to9fos62";
     const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
     const formData = new FormData();
     formData.append('file', file);
