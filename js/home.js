@@ -14,7 +14,7 @@ const FEATURED_BG_COLORS = [
   '#ffc6ff'  // soft rose
 ];
 
-const FEATURED_TEXT_COLORS = ['#333', '#333', '#333', '#333', '#333', '#333'];
+const FEATURED_TEXT_COLORS = ['#000', '#000', '#000', '#000', '#000', '#000'];
 
 const FEATURED_FONT_STYLES = [
   'normal', 'italic', 'normal', 'italic', 'normal', 'italic'
