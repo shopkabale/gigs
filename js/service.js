@@ -14,23 +14,15 @@ function setupShareButton(service, seller) {
     if (!shareBtn) return; // Exit if the button doesn't exist
 
     shareBtn.addEventListener('click', async () => {
-        // --- 1. Define the new promotional message ---
-        const promoMessage = `\n\n_Do you have a service to offer? Post it for free on https://gigs.kabaleonline.com_`;
+        const shareText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}\n\n*View here:* ${window.location.href}`;
 
-        // --- 2. Create two versions of the share text ---
-        // For the modern Share API (without the specific service link)
-        const shareApiText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}${promoMessage}`;
-        
-        // For the clipboard fallback (includes the specific service link)
-        const clipboardText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}\n\n*View here:* ${window.location.href}${promoMessage}`;
-
-        // --- 3. Use the correct text for each method ---
+        // Use the modern Navigator Share API if available
         if (navigator.share) {
             try {
                 await navigator.share({
                     title: `Service: ${service.title}`,
-                    text: shareApiText, // Use the text WITHOUT the URL here
-                    url: window.location.href // The URL is handled by this property
+                    text: shareText,
+                    url: window.location.href
                 });
             } catch (err) {
                 console.error("Share failed:", err);
@@ -38,7 +30,7 @@ function setupShareButton(service, seller) {
         } else {
             // Fallback for browsers that don't support it (like desktop)
             try {
-                await navigator.clipboard.writeText(clipboardText); // Use the full text WITH the URL here
+                await navigator.clipboard.writeText(shareText);
                 alert('Service details copied to clipboard!');
             } catch (err) {
                 alert('Could not copy link. Please copy it manually from the address bar.');
@@ -67,6 +59,7 @@ function renderServiceDetails(service, seller) {
             <div class="service-info">
                 <div class="service-title-header">
                     <h1 id="service-title">${service.title || 'No Title Provided'}</h1>
+                    <!-- The Share Button is now correctly placed here -->
                     <button id="share-btn" title="Share"><i class="fa-solid fa-share-alt"></i></button>
                 </div>
                 
@@ -84,6 +77,7 @@ function renderServiceDetails(service, seller) {
                         ${currentUser && currentUser.uid !== service.providerId ? `<a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn">Message Provider</a>` : ''}
                         ${!currentUser ? `<a href="login.html" class="cta-button message-btn">Login to Message</a>` : ''}
                         
+                        <!-- The WhatsApp button will only appear if the link was created -->
                         ${whatsappLink ? `<a href="${whatsappLink}" target="_blank" class="cta-button whatsapp-btn">Contact via WhatsApp</a>` : ''}
                         
                         <a href="profile.html?id=${service.providerId}" class="cta-button profile-btn">View Public Profile</a>
