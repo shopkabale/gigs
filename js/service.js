@@ -14,15 +14,23 @@ function setupShareButton(service, seller) {
     if (!shareBtn) return; // Exit if the button doesn't exist
 
     shareBtn.addEventListener('click', async () => {
-        const shareText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}\n\n*View here:* ${window.location.href}`;
+        // --- 1. Define the new promotional message ---
+        const promoMessage = `\n\n_Do you have a service to offer? Post it for free on https://gigs.kabaleonline.com_`;
+
+        // --- 2. Create two versions of the share text ---
+        // For the modern Share API (without the specific service link)
+        const shareApiText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}${promoMessage}`;
         
-        // Use the modern Navigator Share API if available
+        // For the clipboard fallback (includes the specific service link)
+        const clipboardText = `*SERVICE ON KABALE ONLINE*\n\n*Provider:* ${seller.name || 'A provider'}\n*Service:* ${service.title || 'Check this out'}\n\n*View here:* ${window.location.href}${promoMessage}`;
+
+        // --- 3. Use the correct text for each method ---
         if (navigator.share) {
             try {
                 await navigator.share({
                     title: `Service: ${service.title}`,
-                    text: shareText,
-                    url: window.location.href
+                    text: shareApiText, // Use the text WITHOUT the URL here
+                    url: window.location.href // The URL is handled by this property
                 });
             } catch (err) {
                 console.error("Share failed:", err);
@@ -30,7 +38,7 @@ function setupShareButton(service, seller) {
         } else {
             // Fallback for browsers that don't support it (like desktop)
             try {
-                await navigator.clipboard.writeText(shareText);
+                await navigator.clipboard.writeText(clipboardText); // Use the full text WITH the URL here
                 alert('Service details copied to clipboard!');
             } catch (err) {
                 alert('Could not copy link. Please copy it manually from the address bar.');
@@ -59,7 +67,6 @@ function renderServiceDetails(service, seller) {
             <div class="service-info">
                 <div class="service-title-header">
                     <h1 id="service-title">${service.title || 'No Title Provided'}</h1>
-                    <!-- The Share Button is now correctly placed here -->
                     <button id="share-btn" title="Share"><i class="fa-solid fa-share-alt"></i></button>
                 </div>
                 
@@ -77,7 +84,6 @@ function renderServiceDetails(service, seller) {
                         ${currentUser && currentUser.uid !== service.providerId ? `<a href="chat.html?recipientId=${service.providerId}" class="cta-button message-btn">Message Provider</a>` : ''}
                         ${!currentUser ? `<a href="login.html" class="cta-button message-btn">Login to Message</a>` : ''}
                         
-                        <!-- The WhatsApp button will only appear if the link was created -->
                         ${whatsappLink ? `<a href="${whatsappLink}" target="_blank" class="cta-button whatsapp-btn">Contact via WhatsApp</a>` : ''}
                         
                         <a href="profile.html?id=${service.providerId}" class="cta-button profile-btn">View Public Profile</a>
@@ -103,18 +109,18 @@ async function loadServiceAndProvider() {
         if (!serviceSnap.exists()) {
             throw new Error("This service could not be found.");
         }
-        
+
         const serviceData = serviceSnap.data();
-        
+
         // Ensure providerId exists before fetching the seller
         if (!serviceData.providerId) {
             throw new Error("This service has no provider information.");
         }
-        
+
         const sellerRef = doc(db, 'users', serviceData.providerId);
         const sellerSnap = await getDoc(sellerRef);
         const sellerData = sellerSnap.exists() ? sellerSnap.data() : {};
-        
+
         renderServiceDetails(serviceData, sellerData);
     } catch (error) {
         console.error("Fatal Error:", error);
