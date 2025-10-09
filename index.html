@@ -1,830 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-UG">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative & Innovative Digital Solution</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4A90E2">
+  <title>Kabale Online - Coming Soon</title>
+  <meta name="description" content="Kabale Online — Your trusted community marketplace. Something amazing is coming soon!">
+  <meta property="og:title" content="Kabale Online - Coming Soon">
+  <meta property="og:description" content="Your trusted community marketplace. Stay tuned for the new Kabale Online Gigs platform.">
+  <meta property="og:image" content="https://www.kabaleonline.com/assets/images/kabale-online-social-share.png">
+  <meta property="og:url" content="https://www.kabaleonline.com/coming-soon">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <style>
-        /* --- GLOBAL STYLES & RESET --- */
-        :root {
-            --primary-blue: #007bff;
-            --dark-blue: #0d2857;
-            --secondary-blue: #e7f1ff;
-            --text-dark: #333;
-            --text-light: #6c757d;
-            --white: #ffffff;
-            --light-gray: #f8f9fa;
-            --border-color: #dee2e6;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --transition-speed: 0.3s;
-        }
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #007bff, #28a745);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .logo span { color: #ffc107; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--white);
-            color: var(--text-dark);
-            line-height: 1.7;
-        }
+    p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+    .notify-btn {
+      background: #ffc107;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .notify-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
 
-        section {
-            padding: 80px 0;
-        }
+    .social-links {
+      margin-top: 2rem;
+    }
+    .social-links a {
+      color: #fff;
+      margin: 0 0.75rem;
+      font-size: 1.5rem;
+      transition: opacity 0.3s;
+    }
+    .social-links a:hover { opacity: 0.7; }
 
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            color: var(--dark-blue);
-        }
-        
-        h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--primary-blue);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-description {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 50px auto;
-            color: var(--text-light);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all var(--transition-speed) ease;
-            border: 2px solid var(--primary-blue);
-        }
-
-        .btn:hover {
-            background-color: var(--white);
-            color: var(--primary-blue);
-            transform: translateY(-3px);
-        }
-        
-        /* --- SCROLL-BASED FADE-IN ANIMATION --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
-        /* --- HEADER --- */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: var(--white);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: all var(--transition-speed) ease;
-            padding: 15px 0;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-blue);
-            font-weight: 500;
-            position: relative;
-            padding-bottom: 5px;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-blue);
-            transition: width var(--transition-speed) ease;
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(13, 40, 87, 0.7), rgba(13, 40, 87, 0.7)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
-            display: flex;
-            align-items: center;
-            color: var(--white);
-        }
-        .hero-content {
-            max-width: 700px;
-        }
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: var(--white);
-        }
-        .hero-content p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        /* --- STATS SECTION --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            text-align: center;
-        }
-        .stat-item {
-            background: var(--light-gray);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: all var(--transition-speed) ease;
-        }
-        .stat-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary-blue);
-        }
-        .stat-item .icon {
-            font-size: 2.5rem;
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-        }
-        .stat-item .counter {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark-blue);
-        }
-        .stat-item p {
-            font-size: 1rem;
-            color: var(--text-light);
-        }
-
-        /* --- ABOUT SECTION --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 50px;
-        }
-        .about-image img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
-        .about-content h2 {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .about-content p {
-            margin-bottom: 20px;
-            color: var(--text-light);
-        }
-
-        /* --- SERVICES SECTION --- */
-        #services { background-color: var(--light-gray); }
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        .service-card {
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: all var(--transition-speed) ease;
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: var(--primary-blue);
-        }
-        .service-card .icon {
-            font-size: 3rem;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-            transition: color var(--transition-speed) ease;
-        }
-        .service-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-            transition: color var(--transition-speed) ease;
-        }
-        .service-card p {
-            color: var(--text-light);
-            transition: color var(--transition-speed) ease;
-        }
-        .service-card:hover .icon,
-        .service-card:hover h3,
-        .service-card:hover p {
-            color: var(--white);
-        }
-
-        /* --- PROJECTS SECTION --- */
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            padding: 0 50px;
-        }
-        .slider-wrapper {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .slide {
-            min-width: 33.33%;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-        .project-card img {
-            width: 100%;
-            border-radius: 15px;
-            height: 250px;
-            object-fit: cover;
-        }
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 45px;
-            height: 45px;
-            background: var(--white);
-            color: var(--primary-blue);
-            border-radius: 50%;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: grid;
-            place-items: center;
-            transition: all var(--transition-speed) ease;
-        }
-        .slider-nav:hover {
-            background-color: var(--primary-blue);
-            color: var(--white);
-        }
-        .prev-btn { left: 0; }
-        .next-btn { right: 0; }
-
-        /* --- TEAM SECTION --- */
-        #team { background-color: var(--light-gray); }
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        .team-member {
-            background: var(--white);
-            text-align: center;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform var(--transition-speed) ease;
-        }
-        .team-member:hover {
-            transform: translateY(-10px);
-        }
-        .team-member img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-        .team-info {
-            padding: 25px;
-        }
-        .team-info h3 {
-            margin-bottom: 5px;
-            font-size: 1.3rem;
-        }
-        .team-info p {
-            color: var(--primary-blue);
-            font-weight: 500;
-        }
-
-        /* --- TESTIMONIALS SECTION --- */
-        .testimonial-slide {
-            min-width: 100%;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-        .testimonial-card {
-            background-color: var(--secondary-blue);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        .testimonial-card p {
-            font-style: italic;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-        .testimonial-author img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 10px auto;
-            object-fit: cover;
-        }
-        .testimonial-author h4 {
-            font-size: 1.1rem;
-            color: var(--dark-blue);
-        }
-        .testimonial-author span {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        .testimonial-slider .slider-wrapper { transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            padding: 60px 0 20px 0;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        .footer-grid h4 {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        .footer-about p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 20px;
-        }
-        .footer-socials a {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-right: 15px;
-            transition: color var(--transition-speed) ease;
-        }
-        .footer-socials a:hover {
-            color: var(--primary-blue);
-        }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 10px; }
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: all var(--transition-speed) ease;
-        }
-        .footer-links a:hover {
-            color: var(--white);
-            padding-left: 5px;
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.5);
-        }
-        
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 992px) {
-            h2 { font-size: 2.2rem; }
-            .nav-links { display: none; } /* Simplified for example; requires JS for hamburger menu */
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .about-grid { grid-template-columns: 1fr; }
-            .services-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
-            .slide { min-width: 50%; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            section { padding: 60px 0; }
-            .stats-grid, .services-grid, .team-grid { grid-template-columns: 1fr; }
-            .slide { min-width: 100%; }
-            .slider-container { padding: 0; }
-            .slider-nav { display: none; } /* Hiding arrows on mobile for swipe functionality */
-            .footer-grid { grid-template-columns: 1fr; text-align: center;}
-            .footer-socials { margin-bottom: 20px; }
-        }
-    </style>
+    /* Animation */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animated { animation: fadeInUp 1s ease-out; }
+  </style>
 </head>
+
 <body>
+  <div class="logo animated">Kabale <span>Online</span></div>
+  <h1 class="animated">Something Exciting is Coming Soon 🚀</h1>
+  <p class="animated">We’re working hard to bring you a better way to discover and hire trusted professionals in Kabale. Stay tuned!</p>
+  
+  <a href="https://chat.whatsapp.com/IfxLBcDErhlCIMg8x4UG9y?mode=ems_copy_t" target="_blank" class="notify-btn animated">
+    Join WhatsApp Community
+  </a>
 
-    <header class="header">
-        <nav class="navbar container">
-            <a href="#" class="nav-logo">DigiPro</a>
-            <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#team">Team</a></li>
-            </ul>
-            <a href="#" class="btn">Get a Quote</a>
-        </nav>
-    </header>
+  <div class="social-links animated">
+    <a href="https://facebook.com/kabaleonline" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/kabaleonline" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.kabaleonline.com" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
+  </div>
 
-    <main>
-        <section id="hero" class="hero">
-            <div class="container">
-                <div class="hero-content fade-in">
-                    <h1>Creative & Innovative Digital Solution</h1>
-                    <p>We are a team of talented designers making websites with the latest technologies. Our goal is to create impactful digital experiences that elevate your brand.</p>
-                    <a href="#about" class="btn">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="stats" class="stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item fade-in">
-                        <i class="fas fa-project-diagram icon"></i>
-                        <h3 class="counter" data-target="124">0</h3>
-                        <p>Projects Completed</p>
-                    </div>
-                    <div class="stat-item fade-in" style="transition-delay: 0.1s;">
-                        <i class="fas fa-smile-beam icon"></i>
-                        <h3 class="counter" data-target="150">0</h3>
-                        <p>Satisfied Clients</p>
-                    </div>
-                    <div class="stat-item fade-in" style="transition-delay: 0.2s;">
-                        <i class="fas fa-users icon"></i>
-                        <h3 class="counter" data-target="35">0</h3>
-                        <p>Expert Employees</p>
-                    </div>
-                    <div class="stat-item fade-in" style="transition-delay: 0.3s;">
-                        <i class="fas fa-award icon"></i>
-                        <h3 class="counter" data-target="12">0</h3>
-                        <p>Awards Won</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container about-grid">
-                <div class="about-image fade-in">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Team discussing project">
-                </div>
-                <div class="about-content fade-in">
-                    <p class="section-subtitle">About Us</p>
-                    <h2 style="text-align: left;">11 Years Of Experience In Digital Solution</h2>
-                    <p>We are a passionate team of developers and designers who believe in the power of technology to transform businesses. With over a decade of experience, we've honed our skills to deliver solutions that are not only visually stunning but also highly functional and user-friendly.</p>
-                    <p>Our commitment to quality and client satisfaction is at the heart of everything we do. We work closely with you to understand your vision and bring it to life.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-        </section>
-        
-        <section id="services" class="services">
-            <div class="container">
-                <p class="section-subtitle">Our Services</p>
-                <h2>We Are The Best In All Services</h2>
-                <p class="section-description">We offer a wide range of services to help you achieve your business goals. From web design to digital marketing, we've got you covered.</p>
-                <div class="services-grid">
-                    <div class="service-card fade-in">
-                        <i class="fas fa-laptop-code icon"></i>
-                        <h3>Web Design</h3>
-                        <p>Stunning, responsive websites that captivate your audience and drive conversions.</p>
-                    </div>
-                    <div class="service-card fade-in" style="transition-delay: 0.1s;">
-                        <i class="fas fa-mobile-alt icon"></i>
-                        <h3>App Design</h3>
-                        <p>Intuitive and engaging mobile apps for both iOS and Android platforms.</p>
-                    </div>
-                    <div class="service-card fade-in" style="transition-delay: 0.2s;">
-                        <i class="fas fa-chart-line icon"></i>
-                        <h3>Digital Marketing</h3>
-                        <p>Data-driven strategies to boost your online presence and grow your business.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="projects">
-            <div class="container">
-                <p class="section-subtitle">Our Work</p>
-                <h2>Learn More About Our Complete Projects</h2>
-                <div class="slider-container project-slider fade-in">
-                    <div class="slider-wrapper">
-                        <div class="slide"><div class="project-card"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Project 1"></div></div>
-                        <div class="slide"><div class="project-card"><img src="https://images.unsplash.com/photo-1559028006-44d5a2b3e3f4?q=80&w=1935&auto=format&fit=crop" alt="Project 2"></div></div>
-                        <div class="slide"><div class="project-card"><img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=2070&auto=format&fit=crop" alt="Project 3"></div></div>
-                        <div class="slide"><div class="project-card"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" alt="Project 4"></div></div>
-                        <div class="slide"><div class="project-card"><img src="https://images.unsplash.com/photo-1516116216624-53e6973bea12?q=80&w=2070&auto=format&fit=crop" alt="Project 5"></div></div>
-                    </div>
-                    <button class="slider-nav prev-btn"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-nav next-btn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-        </section>
-
-        <section id="team" class="team">
-            <div class="container">
-                <p class="section-subtitle">Our Team</p>
-                <h2>We Are A Creative Team For Your Dream Project</h2>
-                <div class="team-grid">
-                    <div class="team-member fade-in">
-                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1780&auto=format&fit=crop" alt="Team Member 1">
-                        <div class="team-info">
-                            <h3>J.J. Haves</h3>
-                            <p>CEO & Founder</p>
-                        </div>
-                    </div>
-                    <div class="team-member fade-in" style="transition-delay: 0.1s;">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop" alt="Team Member 2">
-                        <div class="team-info">
-                            <h3>T.T. Bross</h3>
-                            <p>Project Manager</p>
-                        </div>
-                    </div>
-                    <div class="team-member fade-in" style="transition-delay: 0.2s;">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop" alt="Team Member 3">
-                        <div class="team-info">
-                            <h3>T.T. Haves</h3>
-                            <p>Lead Developer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="testimonials" class="testimonials">
-            <div class="container">
-                <p class="section-subtitle">Testimonials</p>
-                <h2>What Our Clients Say!</h2>
-                 <div class="slider-container testimonial-slider fade-in">
-                    <div class="slider-wrapper">
-                        <div class="testimonial-slide">
-                            <div class="testimonial-card">
-                                <p>"Working with this team was a game-changer for our business. Their attention to detail and creative solutions exceeded all our expectations. The final product was flawless and delivered right on schedule."</p>
-                                <div class="testimonial-author">
-                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client 1">
-                                    <h4>Sarah Johnson</h4>
-                                    <span>Marketing Director, TechCorp</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-slide">
-                            <div class="testimonial-card">
-                                <p>"An absolutely fantastic experience from start to finish. They are true professionals who are masters of their craft. I couldn't be happier with our new website. Highly recommended!"</p>
-                                <div class="testimonial-author">
-                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client 2">
-                                    <h4>Michael Chen</h4>
-                                    <span>Founder, Innovate Solutions</span>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="testimonial-slide">
-                            <div class="testimonial-card">
-                                <p>"The level of professionalism and creativity is unmatched. They took our vague ideas and turned them into a digital masterpiece. Our user engagement has skyrocketed since the launch."</p>
-                                <div class="testimonial-author">
-                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client 3">
-                                    <h4>Emily Rodriguez</h4>
-                                    <span>CEO, Creative Ventures</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="slider-nav prev-btn"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-nav next-btn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <h4>DigiPro</h4>
-                    <p>We are a leading digital agency dedicated to helping businesses grow in the online world. Let's create something amazing together.</p>
-                     <div class="footer-socials">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#projects">Portfolio</a></li>
-                        <li><a href="#team">Team</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-                 <div class="footer-links">
-                    <h4>Contact Us</h4>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Street, New York, USA</li>
-                        <li><i class="fas fa-phone-alt"></i> +012 345 67890</li>
-                        <li><i class="fas fa-envelope"></i> info@example.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 DigiPro. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            
-            // --- FADE-IN ANIMATION ON SCROLL ---
-            const faders = document.querySelectorAll('.fade-in');
-            const appearOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
-            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    } else {
-                        entry.target.classList.add('visible');
-                        appearOnScroll.unobserve(entry.target);
-                    }
-                });
-            }, appearOptions);
-
-            faders.forEach(fader => {
-                appearOnScroll.observe(fader);
-            });
-
-            // --- ANIMATED COUNTER ---
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the #, the faster the count
-
-            const countUp = (counter) => {
-                const target = +counter.getAttribute('data-target');
-                let count = 0;
-                const inc = target / speed;
-
-                const updateCount = () => {
-                    if (count < target) {
-                        count += inc;
-                        counter.innerText = Math.ceil(count);
-                        setTimeout(updateCount, 1);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCount();
-            };
-
-            const counterObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        countUp(entry.target);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.8 });
-            
-            counters.forEach(counter => {
-                counterObserver.observe(counter);
-            });
-
-            // --- GENERIC SLIDER FUNCTIONALITY ---
-            function initializeSlider(sliderSelector, autoplayInterval = 5000) {
-                const slider = document.querySelector(sliderSelector);
-                if (!slider) return;
-
-                const wrapper = slider.querySelector('.slider-wrapper');
-                const slides = slider.querySelectorAll('.slide, .testimonial-slide');
-                const prevBtn = slider.querySelector('.prev-btn');
-                const nextBtn = slider.querySelector('.next-btn');
-
-                let currentIndex = 0;
-                let slideWidth = slides[0].clientWidth;
-                let intervalId;
-
-                function goToSlide(index) {
-                    if (index < 0) index = slides.length - 1;
-                    if (index >= slides.length) index = 0;
-                    
-                    wrapper.style.transform = `translateX(-${index * slideWidth}px)`;
-                    currentIndex = index;
-                }
-                
-                function nextSlide() {
-                    let slidesInView = Math.round(slider.clientWidth / slideWidth);
-                    let nextIndex = currentIndex + 1;
-                    if(nextIndex > slides.length - slidesInView){
-                        nextIndex = 0;
-                    }
-                    goToSlide(nextIndex);
-                }
-
-                function startAutoplay() {
-                    intervalId = setInterval(nextSlide, autoplayInterval);
-                }
-
-                function stopAutoplay() {
-                    clearInterval(intervalId);
-                }
-
-                if(nextBtn) nextBtn.addEventListener('click', () => {
-                    nextSlide();
-                    stopAutoplay();
-                    startAutoplay();
-                });
-
-                if(prevBtn) prevBtn.addEventListener('click', () => {
-                    goToSlide(currentIndex - 1);
-                    stopAutoplay();
-                    startAutoplay();
-                });
-                
-                // Recalculate slide width on window resize
-                window.addEventListener('resize', () => {
-                    slideWidth = slides[0].clientWidth;
-                    goToSlide(currentIndex); // Adjust position
-                });
-
-                slider.addEventListener('mouseenter', stopAutoplay);
-                slider.addEventListener('mouseleave', startAutoplay);
-
-                startAutoplay();
-            }
-
-            // Initialize sliders
-            initializeSlider('.project-slider', 4000);
-            initializeSlider('.testimonial-slider', 6000);
-
-        });
-    </script>
-
+  <div class="footer">&copy; 2025 Kabale Online — Your Community Marketplace</div>
 </body>
 </html>
